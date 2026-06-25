@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiszki Fizyka - Kompletny Przewodnik</title>
-    <!-- MathJax dla pięknego renderowania wzorów matematycznych -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/video/tex-mml-chtml.js"></script>
+    <title>Fiszki Fizyka</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -15,11 +12,10 @@
             --text-color: #f8fafc;
             --accent-color: #38bdf8;
             --border-color: #334155;
-            --success-color: #22c55e;
+            --variable-color: #f472b6;
         }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -29,234 +25,65 @@
             align-items: center;
             min-height: 100vh;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            font-size: 2.5rem;
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            font-size: 1.1rem;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--accent-color); margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; font-size: 1rem; }
+        .controls { display: flex; gap: 15px; margin-bottom: 25px; }
         button {
-            background-color: #334155;
-            color: white;
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s ease;
+            background-color: #334155; color: white; border: 1px solid var(--border-color);
+            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 1rem;
         }
-
-        button:hover {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-weight: bold;
-        }
-
-        .progress {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            color: #94a3b8;
-        }
-
-        /* Kontener Fiszki */
-        .flashcard-container {
-            width: 100%;
-            max-width: 650px;
-            height: 450px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .flashcard {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .flashcard.flipped {
-            transform: rotateY(180deg);
-        }
-
+        button:hover { background-color: var(--accent-color); color: var(--bg-color); }
+        .progress { margin-bottom: 15px; font-size: 1.1rem; color: #94a3b8; }
+        .flashcard-container { width: 100%; max-width: 650px; height: 450px; perspective: 1000px; cursor: pointer; }
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
+        .flashcard.flipped { transform: rotateY(180deg); }
         .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 16px;
-            padding: 30px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            overflow-y: auto;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 16px; padding: 30px; box-sizing: border-box; display: flex;
+            flex-direction: column; border: 2px solid var(--border-color); overflow-y: auto;
         }
-
-        .card-front {
-            background-color: var(--card-bg-front);
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .card-back {
-            background-color: var(--card-bg-back);
-            transform: rotateY(180deg);
-            justify-content: flex-start;
-        }
-
-        .id-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: #334155;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-        }
-
-        .topic-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: rgba(56, 189, 248, 0.2);
-            color: var(--accent-color);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .question-text {
-            font-size: 1.6rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin-bottom: 20px;
-        }
-
-        .formula-display {
-            font-size: 1.8rem;
-            background: rgba(15, 23, 42, 0.5);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid var(--accent-color);
-            text-align: center;
-        }
-
-        .variables-list {
-            margin-top: 15px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .variables-list h4 {
-            margin: 0 0 10px 0;
-            color: var(--accent-color);
-            font-size: 1.1rem;
-        }
-
-        .variable-item {
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .variable-symbol {
-            color: #f472b6;
-            font-weight: bold;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 1.1rem;
-        }
-
-        .hint-click {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.85rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .details-block {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 0.95rem;
-            border-left: 3px solid #cbd5e1;
-        }
-
-        /* Responsywność */
-        @media (max-width: 768px) {
-            .flashcard-container {
-                height: 500px;
-            }
-            .question-text {
-                font-size: 1.3rem;
-            }
-            .formula-display {
-                font-size: 1.4rem;
-            }
-        }
+        .card-front { background-color: var(--card-bg-front); justify-content: center; align-items: center; text-align: center; }
+        .card-back { background-color: var(--card-bg-back); transform: rotateY(180deg); justify-content: flex-start; }
+        .id-badge { position: absolute; top: 15px; left: 15px; background-color: #334155; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+        .topic-badge { position: absolute; top: 15px; right: 15px; background-color: rgba(56, 189, 248, 0.15); color: var(--accent-color); padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
+        .question-text { font-size: 1.5rem; font-weight: bold; }
+        .formula-display { font-size: 1.6rem; background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; margin: 15px 0; border-left: 5px solid var(--accent-color); text-align: center; }
+        .variables-list { border-top: 1px solid var(--border-color); padding-top: 15px; }
+        .variables-list h4 { margin: 0 0 10px 0; color: var(--accent-color); }
+        .variable-item { margin-bottom: 8px; font-size: 0.95rem; }
+        .variable-symbol { color: var(--variable-color); font-weight: bold; }
+        .hint-click { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); font-size: 0.8rem; color: #64748b; text-transform: uppercase; }
+        .fraction { display: inline-block; vertical-align: middle; text-align: center; padding: 0 4px; }
+        .fraction span.numerator { display: block; border-bottom: 2px solid var(--text-color); padding-bottom: 2px; }
+        .fraction span.denominator { display: block; padding-top: 2px; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Fiszki z Fizyki</h1>
-        <div class="subtitle">Wzory, Definicje, Zmienne i Równania Materiałowe</div>
+        <div class="subtitle">Wzory, Definicje i Zmienne</div>
     </header>
 
-    <div class="progress" id="progressTracker">Fiszka: 1 / 26</div>
+    <div class="progress" id="progressTracker">Ładowanie...</div>
 
     <div class="flashcard-container" onclick="flipCard()">
         <div class="flashcard" id="card">
-            <!-- Przód Fiszki -->
             <div class="card-face card-front">
                 <span class="id-badge" id="cardId">#1</span>
-                <span class="topic-badge" id="cardTopic">Drgania</span>
-                <div class="question-text" id="cardQuestion">Równanie drgań wymuszonych oraz częstość rezonansowa</div>
-                <div class="hint-click">Kliknij, aby odwrócić</div>
+                <span class="topic-badge" id="cardTopic">Temat</span>
+                <div class="question-text" id="cardQuestion">Pytanie</div>
+                <div class="hint-click">Kliknij, aby odkryć odpowiedź</div>
             </div>
-            <!-- Tył Fiszki -->
             <div class="card-face card-back" onclick="event.stopPropagation();">
                 <span class="id-badge" id="cardIdBack">#1</span>
-                <div class="formula-display" id="cardFormula">
-                    $$rac{d^2x}{dt^2} + 2 etarac{dx}{dt} + \omega_o^2x = P\cos(\Omega t)$$
-                    $$\omega_r = \sqrt{\omega_o^2 - 2 eta^2}$$
-                </div>
+                <div class="formula-display" id="cardFormula"></div>
                 <div class="variables-list">
                     <h4>Objaśnienie zmiennych i stałych:</h4>
-                    <div id="cardVariables">
-                        <!-- Generowane dynamicznie -->
-                    </div>
+                    <div id="cardVariables"></div>
                 </div>
-                <div class="hint-click" style="color: #64748b;" onclick="flipCard()">Kliknij tło, aby wrócić</div>
+                <div class="hint-click" style="color: #64748b;" onclick="flipCard()">Kliknij tło karty, aby obrócić</div>
             </div>
         </div>
     </div>
@@ -270,136 +97,58 @@
     <script>
         const flashcardsData = [
             {
-                id: "1",
-                topic: "Drgania",
+                id: "1a",
+                topic: "Równanie drgań",
                 question: "Równanie drgań wymuszonych oraz częstość rezonansowa",
-                formula: "$$\frac{d^2x}{dt^2} + 2\beta\frac{dx}{dt} + \omega_o^2x = P\cos(\Omega t)$$$$\text{Częstość rezonansowa: } \omega_r = \sqrt{\omega_o^2 - 2\beta^2}$$",
+                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = P cos(&Omega;t)<br><br>&omega;<sub>r</sub> = &radic;(&omega;<sub>o</sub><sup>2</sup> - 2&beta;<sup>2</sup>)',
                 variables: [
-                    { symbol: "x", desc: "wychylenie układu z położenia równowagi w funkcji czasu t" },
+                    { symbol: "x", desc: "wychylenie układu z położenia równowagi" },
                     { symbol: "t", desc: "czas" },
-                    { symbol: "\frac{d^2x}{dt^2}", desc: "druga pochodna wychylenia po czasie (przyspieszenie układu)" },
-                    { symbol: "\frac{dx}{dt}", desc: "pierwsza pochodna wychylenia po czasie (prędkość układu)" },
-                    { symbol: "\beta", desc: "współczynnik tłumienia układu" },
-                    { symbol: "\omega_o", desc: "częstość kołowa drgań własnych układu (nietłumionych)" },
-                    { symbol: "P", desc: "amplituda siły wymuszającej (lub przyspieszenia wymuszającego, w zależności od unormowania)" },
-                    { symbol: "\Omega", desc: "częstość kołowa siły wymuszającej" },
-                    { symbol: "\omega_r", desc: "częstość rezonansowa - częstość wymuszenia, przy której amplituda osiąga maksimum" }
+                    { symbol: "d<sup>2</sup>x / dt<sup>2</sup>", desc: "druga pochodna wychylenia po czasie (przyspieszenie)" },
+                    { symbol: "dx / dt", desc: "pierwsza pochodna ruchu po czasie (prędkość)" },
+                    { symbol: "&beta; (beta)", desc: "współczynnik tłumienia" },
+                    { symbol: "&omega;<sub>o</sub>", desc: "częstość kołowa drgań własnych" },
+                    { symbol: "P", desc: "amplituda siły wymuszającej" },
+                    { symbol: "&Omega; (omega)", desc: "częstość kołowa zewnętrznej siły" },
+                    { symbol: "&omega;<sub>r</sub>", desc: "częstość rezonansowa układu" }
                 ]
             },
             {
-                id: "1.1",
-                topic: "Drgania",
+                id: "1b",
+                topic: "Równanie drgań",
                 question: "Równanie drgań tłumionych i jego rozwiązanie",
-                formula: "$$\frac{d^2x}{dt^2} + 2\beta\frac{dx}{dt} + \omega_o^2x = 0$$$$\text{Rozwiązanie: } x = x_o e^{-\beta t}\cos(\omega t + \varphi)$$$$\text{gdzie: } \omega = \sqrt{\omega_o^2 - \beta^2}$$",
+                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = 0<br><br>x = x<sub>o</sub>e<sup>-&beta;t</sup>cos(&omega;t + &phi;), gdzie &omega; = &radic;(&omega;<sub>o</sub><sup>2</sup> - &beta;<sup>2</sup>)',
                 variables: [
-                    { symbol: "x", desc: "wychylenie z położenia równowagi" },
-                    { symbol: "t", desc: "czas" },
-                    { symbol: "\beta", desc: "współczynnik tłumienia" },
-                    { symbol: "\omega_o", desc: "częstość własna drgań nietłumionych" },
-                    { symbol: "x_o", desc: "amplituda początkowa (dla t = 0)" },
-                    { symbol: "e", desc: "podstawa logarytmu naturalnego (~2.718)" },
-                    { symbol: "\omega", desc: "częstość kołowa drgań tłumionych" },
-                    { symbol: "\varphi", desc: "faza początkowa drgań" },
-                    { symbol: "\cos(\dots)", desc: "funkcja trygonometryczna opisująca oscylacyjny charakter ruchu" }
-                ]
-            },
-            {
-                id: "1.2",
-                topic: "Drgania",
-                question: "Równanie drgań harmonicznych (dla \(\beta = 0\)) i jego rozwiązanie",
-                formula: "$$\frac{d^2x}{dt^2} + \omega_o^2x = 0$$$$\text{Rozwiązanie: } x = x_o\cos(\omega_o t + \varphi)$$",
-                variables: [
-                    { symbol: "x", desc: "wychylenie z położenia równowagi w funkcji czasu" },
-                    { symbol: "\omega_o", desc: "częstość kołowa drgań własnych" },
-                    { symbol: "x_o", desc: "maksymalne wychylenie (amplituda drgań)" },
-                    { symbol: "t", desc: "czas" },
-                    { symbol: "\varphi", desc: "faza początkowa ruchu harmonicznego" }
+                    { symbol: "x", desc: "chwilowe wychylenie z położenia równowagi" },
+                    { symbol: "x<sub>o</sub>", desc: "amplituda początkowa drgań" },
+                    { symbol: "e", desc: "podstawa logarytmu naturalnego" },
+                    { symbol: "&beta;", desc: "współczynnik tłumienia" },
+                    { symbol: "&omega;", desc: "częstość drgań tłumionych" },
+                    { symbol: "&phi; (phi)", desc: "faza początkowa drgań" }
                 ]
             },
             {
                 id: "2",
                 topic: "Wahadła",
                 question: "Okres drgań wahadła fizycznego",
-                formula: "$$T = 2\pi \sqrt{\frac{J}{mgl}}$$",
+                formula: 'T = 2&pi; &radic;<div class="fraction"><span class="numerator">J</span><span class="denominator">mgl</span></div>',
                 variables: [
-                    { symbol: "T", desc: "okres drgań wahadła (czas pełnego jednego wahnięcia tam i z powrotem)" },
-                    { symbol: "J", desc: "moment bezwładności bryły sztywnej (wahadła) względem osi obrotu" },
-                    { symbol: "m", desc: "całkowita masa wahadła" },
-                    { symbol: "g", desc: "przyspieszenie ziemskie (grawitacyjne)" },
-                    { symbol: "l", desc: "odległość od osi obrotu do środka ciężkości (masy) bryły" }
-                ]
-            },
-            {
-                id: "3",
-                topic: "Drgania",
-                question: "Logarytmiczny dekrement tłumienia",
-                formula: "$$\Lambda = \ln\frac{A_o e^{-\beta t}}{A_o e^{-\beta(t+T)}} = \beta T$$",
-                variables: [
-                    { symbol: "\Lambda", desc: "logarytmiczny dekrement tłumienia (miara szybkości zanikania drgań)" },
-                    { symbol: "\ln", desc: "logarytm naturalny" },
-                    { symbol: "A_o e^{-\beta t}", desc: "amplituda drgań w chwili t" },
-                    { symbol: "A_o e^{-\beta(t+T)}", desc: "amplituda drgań po upływie jednego okresu T" },
-                    { symbol: "\beta", desc: "współczynnik tłumienia" },
-                    { symbol: "T", desc: "okres drgań" }
+                    { symbol: "T", desc: "okres drgań wahadła" },
+                    { symbol: "J", desc: "moment bezwładności bryły sztywnej względem osi obrotu" },
+                    { symbol: "m", desc: "masa całkowita wahadła" },
+                    { symbol: "g", desc: "przyspieszenie ziemskie" },
+                    { symbol: "l", desc: "odległość od osi obrotu do środka ciężkości" }
                 ]
             },
             {
                 id: "4",
                 topic: "Elektrostatyka",
                 question: "Siła Coulomba (Oddziaływanie ładunków)",
-                formula: "$$F = k\frac{q_1q_2}{r^2}$$",
+                formula: 'F = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r<sup>2</sup></span></div>',
                 variables: [
-                    { symbol: "F", desc: "wartość siły wzajemnego oddziaływania elektrostatycznego pomiędzy dwoma ładunkami" },
-                    { symbol: "k", desc: "stała elektrostatyczna, gdzie \(k = \frac{1}{4\pi\varepsilon_o}\)" },
-                    { symbol: "q_1, q_2", desc: "wartości punktowych ładunków elektrycznych" },
-                    { symbol: "r", desc: "odległość między środkami ładunków punktowych" }
-                ]
-            },
-            {
-                id: "5",
-                topic: "Elektrostatyka",
-                question: "Natężenie pola elektrycznego ładunku punktowego",
-                formula: "$$E = k\frac{Q}{r^2}$$",
-                variables: [
-                    { symbol: "E", desc: "wartość natężenia pola elektrycznego w danej odległości od ładunku źródłowego" },
-                    { symbol: "k", desc: "stała elektrostatyczna" },
-                    { symbol: "Q", desc: "wartość ładunku punktowego wytwarzającego pole elektryczne" },
-                    { symbol: "r", desc: "odległość punktu pomiarowego od ładunku źródłowego Q" }
-                ]
-            },
-            {
-                id: "6",
-                topic: "Elektrostatyka",
-                question: "Potencjał pola elektrycznego ładunku punktowego",
-                formula: "$$V = k\frac{Q}{r}$$",
-                variables: [
-                    { symbol: "V", desc: "potencjał pola elektrycznego (skalar) w odległości r od ładunku" },
-                    { symbol: "k", desc: "stała elektrostatyczna" },
-                    { symbol: "Q", desc: "ładunek punktowy będący źródłem pola" },
-                    { symbol: "r", desc: "odległość od ładunku Q do punktu, w którym wyznaczamy potencjał" }
-                ]
-            },
-            {
-                id: "7",
-                topic: "Elektrostatyka",
-                question: "Zależność natężenia pola od potencjału (Związek różniczkowy)",
-                formula: "$$\vec{E} = -\overline{grad}(V)$$",
-                variables: [
-                    { symbol: "\vec{E}", desc: "wektor natężenia pola elektrycznego" },
-                    { symbol: "V", desc: "potencjał elektryczny (pole skalarne)" },
-                    { symbol: "\overline{grad}", desc: "operator gradientu (przestrzenna pochodna cząstkowa, zaznaczona kreską u góry)" },
-                    { symbol: "-", desc: "minus oznacza, że wektor pola elektrycznego jest zwrócony w stronę malejącego potencjału" }
-                ]
-            },
-            {
-                id: "8",
-                topic: "Elektrostatyka",
-                question: "Energia potencjalna układu dwóch ładunków",
-                formula: "$$E_p = k\frac{q_1q_2}{r}$$",
-                variables: [
-                    { symbol: "E_p", desc: "wzajemna elektrostatyczna energia potencjalna układu dwóch ładunków" },
-                    { symbol: "k", desc: "stała elektrostatyczna" },
-                    { symbol: "q_1, q_2", desc: "wartości oddziałujących ze sobą ładunków elektrycznych" },
+                    { symbol: "F", desc: "wartość elektrostatycznej siły wzajemnego oddziaływania" },
+                    { symbol: "k", desc: "stała elektrostatyczna ośrodka" },
+                    { symbol: "q<sub>1</sub>, q<sub>2</sub>", desc: "wartości ładunków punktowych" },
                     { symbol: "r", desc: "odległość pomiędzy ładunkami" }
                 ]
             },
@@ -407,236 +156,37 @@
                 id: "9",
                 topic: "Elektrostatyka",
                 question: "Równanie Poissona",
-                formula: "$$\Delta V = -\frac{1}{\varepsilon_o}\rho$$",
+                formula: '&Delta;V = - <div class="fraction"><span class="numerator">1</span><span class="denominator">&epsilon;<sub>o</sub></span></div> &rho;',
                 variables: [
-                    { symbol: "\Delta", desc: "operator Laplace'a (laplasjan), oznaczający sumę drugich pochodnych cząstkowych" },
+                    { symbol: "&Delta; (laplasjan)", desc: "operator różniczkowy Laplace'a" },
                     { symbol: "V", desc: "potencjał elektryczny" },
-                    { symbol: "\rho", desc: "gęstość objętościowa ładunku elektrycznego w danym punkcie przestrzeni" },
-                    { symbol: "\varepsilon_o", desc: "przenikalność elektryczna próżni" }
-                ]
-            },
-            {
-                id: "10",
-                topic: "Kondensatory",
-                question: "Definicja pojemności kondensatora oraz model płaski",
-                formula: "$$C = \frac{Q}{U}$$$$\text{Dla płaskiego: } C = \frac{\varepsilon_o\varepsilon_r S}{d}$$",
-                variables: [
-                    { symbol: "C", desc: "pojemność elektryczna kondensatora" },
-                    { symbol: "Q", desc: "ładunek zgromadzony na jednej okładce kondensatora" },
-                    { symbol: "U", desc: "napięcie (różnica potencjałów) między okładkami" },
-                    { symbol: "\varepsilon_o", desc: "przenikalność elektryczna próżni" },
-                    { symbol: "\varepsilon_r", desc: "względna przenikalność elektryczna dielektryka umieszczonego między okładkami" },
-                    { symbol: "S", desc: "powierzchnia użytkowa jednej okładki kondensatora" },
-                    { symbol: "d", desc: "odległość pomiędzy okładkami kondensatora" }
-                ]
-            },
-            {
-                id: "11",
-                topic: "Gęstość Energii",
-                question: "Gęstość energii pola elektrycznego i magnetycznego",
-                formula: "$$\text{Elektrycznego: } u = \frac{1}{2}\varepsilon_o E^2$$$$\text{Magnetycznego: } u_B = \frac{1}{1}{2\mu_r\mu_o}B^2 = \frac{1}{2\mu_r\mu_o}B^2$$",
-                variables: [
-                    { symbol: "u", desc: "objętościowa gęstość energii pola elektrycznego (energia na jednostkę objętości)" },
-                    { symbol: "\varepsilon_o", desc: "przenikalność elektryczna próżni" },
-                    { symbol: "E", desc: "wartość natężenia pola elektrycznego" },
-                    { symbol: "u_B", desc: "objętościowa gęstość energii pola magnetycznego" },
-                    { symbol: "\mu_o", desc: "przenikalność magnetyczna próżni" },
-                    { symbol: "\mu_r", desc: "względna przenikalność magnetyczna ośrodka" },
-                    { symbol: "B", desc: "wartość indukcji magnetycznej" }
-                ]
-            },
-            {
-                id: "12",
-                topic: "Dielektryki",
-                question: "Moment dipolowy elektryczny",
-                formula: "$$\vec{p} = q\vec{l}$$",
-                variables: [
-                    { symbol: "\vec{p}", desc: "wektorowy moment dipolowy" },
-                    { symbol: "q", desc: "bezwzględna wartość jednego z ładunków tworzących dipol" },
-                    { symbol: "\vec{l}", desc: "wektor przesunięcia skierowany od ładunku ujemnego do dodatniego" }
-                ]
-            },
-            {
-                id: "13",
-                topic: "Dielektryki",
-                question: "Wektor polaryzacji i podatność elektryczna",
-                formula: "$$\vec{P} = n\vec{p} = n\alpha\vec{E} = \chi\varepsilon_o\vec{E}$$$$\chi = \frac{n\alpha}{\varepsilon_o}$$",
-                variables: [
-                    { symbol: "\vec{P}", desc: "wektor polaryzacji (suma momentów dipolowych w jednostce objętości)" },
-                    { symbol: "n", desc: "koncentracja dipoli (liczba dipoli na jednostkę objętości)" },
-                    { symbol: "\vec{p}", desc: "pojedynczy moment dipolowy" },
-                    { symbol: "\alpha", desc: "współczynnik polaryzowalności atomu/cząsteczki" },
-                    { symbol: "\vec{E}", desc: "wektor natężenia pola elektrycznego zewnętrznego" },
-                    { symbol: "\chi", desc: "podatność elektryczna dielektryka (wielkość bezwymiarowa)" },
-                    { symbol: "\varepsilon_o", desc: "przenikalność elektryczna próżni" }
-                ]
-            },
-            {
-                id: "14",
-                topic: "Prąd Elektryczny",
-                question: "Natężenie prądu oraz gęstość prądu",
-                formula: "$$I = \frac{dQ}{dt}$$$$\text{Gęstość prądu: } j = \frac{I}{S}$$",
-                variables: [
-                    { symbol: "I", desc: "natężenie prądu elektrycznego (pochodna ładunku po czasie)" },
-                    { symbol: "dQ", desc: "ładunek elementarny przepływający przez poprzeczny przekrój w czasie dt" },
-                    { symbol: "dt", desc: "nieskończenie mały przedział czasu" },
-                    { symbol: "j", desc: "gęstość prądu elektrycznego" },
-                    { symbol: "S", desc: "pole przekroju poprzecznego przewodnika" }
-                ]
-            },
-            {
-                id: "15",
-                topic: "Prąd Elektryczny",
-                question: "Prawo Ohma (Makroskopowe i Mikroskopowe/Różniczkowe)",
-                formula: "$$R = \frac{U}{I}$$$$\text{Mikroskopowe: } \vec{j} = \sigma\vec{E}$$",
-                variables: [
-                    { symbol: "R", desc: "rezystancja (opór elektryczny) przewodnika" },
-                    { symbol: "U", desc: "napięcie przyłożone do przewodnika" },
-                    { symbol: "I", desc: "natężenie prądu płynącego przez przewodnik" },
-                    { symbol: "\vec{j}", desc: "wektor gęstości prądu" },
-                    { symbol: "\sigma", desc: "przewodnictwo właściwe (konduktywność) materiału" },
-                    { symbol: "\vec{E}", desc: "wektor natężenia pola elektrycznego wewnątrz przewodnika" }
-                ]
-            },
-            {
-                id: "16",
-                topic: "Prąd Elektryczny",
-                question: "Rezystancja geometryczna przewodnika",
-                formula: "$$R = \rho\frac{l}{S}$$",
-                variables: [
-                    { symbol: "R", desc: "opór elektryczny (rezystancja)" },
-                    { symbol: "\rho", desc: "rezystywność (opór właściwy) materiału przewodnika" },
-                    { symbol: "l", desc: "długość przewodnika" },
-                    { symbol: "S", desc: "pole przekroju poprzecznego przewodnika" }
-                ]
-            },
-            {
-                id: "17",
-                topic: "Prawa Kirchhoffa",
-                question: "I i II Prawo Kirchhoffa (Zdefiniowane samodzielnie)",
-                formula: "$$\text{I Prawo (Węzła): } \sum I_{in} = \sum I_{out} \implies \sum I = 0$$$$\text{II Prawo (Oczka): } \sum U = \sum E_{sem} \implies \sum \Delta V = 0$$",
-                variables: [
-                    { symbol: "\sum I = 0", desc: "Suma algebraiczna natężeń prądów wpływających i wypływających z węzła obwodu wynosi zero (wynika z zasady zachowania ładunku)." },
-                    { symbol: "\sum U = 0", desc: "Suma algebraiczna spadków napięć i sił elektromotorycznych (SEM) w zamkniętym oczku obwodu wynosi zero (wynika z zasady zachowania energii)." }
-                ]
-            },
-            {
-                id: "18",
-                topic: "Prąd Elektryczny",
-                question: "Ciepło Joule'a wydzielane w rezystorze",
-                formula: "$$Q = dW = Udq = UIdt$$",
-                variables: [
-                    { symbol: "Q / dW", desc: "ciepło Joule'a / praca elementarna prądu elektrycznego zamieniana na energię termiczną" },
-                    { symbol: "U", desc: "napięcie na rezystorze" },
-                    { symbol: "dq", desc: "ładunek elementarny przepływający przez rezystor (dq = I * dt)" },
-                    { symbol: "I", desc: "natężenie prądu" },
-                    { symbol: "dt", desc: "czas przepływu prądu" }
-                ]
-            },
-            {
-                id: "19",
-                topic: "Prąd Elektryczny",
-                question: "Moc prądu elektrycznego",
-                formula: "$$P = \frac{dW}{dt} = UI$$",
-                variables: [
-                    { symbol: "P", desc: "moc prądu elektrycznego wydzielana na elemencie obwodu" },
-                    { symbol: "dW", desc: "praca elementarna wykonana przez pole elektryczne" },
-                    { symbol: "dt", desc: "czas, w którym praca została wykonana" },
-                    { symbol: "U", desc: "napięcie elektryczne" },
-                    { symbol: "I", desc: "natężenie prądu elektrycznego" }
-                ]
-            },
-            {
-                id: "20.1",
-                topic: "Magnetyzm ciał",
-                question: "Podział ciał ze względu na własności magnetyczne: DIAMAGNETYKI",
-                formula: "$$\mu_r < 1, \quad \chi_M < 0$$$$\text{Przykład: woda } (\mu_r = 0.999991)$$",
-                variables: [
-                    { symbol: "\mu_r", desc: "względna przenikalność magnetyczna ośrodka (nieznacznie mniejsza od jedności)" },
-                    { symbol: "\chi_M", desc: "podatność magnetyczna materiału (ujemna)" },
-                    { symbol: "\text{Momenty}", desc: "w diamagnetykach występują wyłącznie momenty indukowane, które są przeciwnie skierowane do zewnętrznego pola magnetycznego." },
-                    { symbol: "\text{Zachowanie}", desc: "Są wypychane z silniejszego pola magnetycznego do słabszego." }
-                ]
-            },
-            {
-                id: "20.2",
-                topic: "Magnetyzm ciał",
-                question: "Podział ciał ze względu na własności magnetyczne: PARAMAGNETYKI",
-                formula: "$$\mu_r > 1, \quad \chi_M > 0$$$$\text{Przykład: glin } (\mu_r = 1.000008)$$",
-                variables: [
-                    { symbol: "\mu_r", desc: "względna przenikalność magnetyczna (nieznacznie większa od jedności)" },
-                    { symbol: "p_m", desc: "uporządkowane momenty własne cząsteczek, które ustawiają się zgodnie z zewnętrznym polem magnetycznym" },
-                    { symbol: "\text{Zachowanie}", desc: "Paramagnetyk jest wciągany do obszaru silniejszego pola magnetycznego." }
-                ]
-            },
-            {
-                id: "20.3",
-                topic: "Magnetyzm ciał",
-                question: "Podział ciał ze względu na własności magnetyczne: FERROMAGNETYKI",
-                formula: "$$\mu_r \gg 1 \quad \text{(np. stal } \mu_r = 300\text{, zależy od pola)}$$",
-                variables: [
-                    { symbol: "\mu_r", desc: "względna przenikalność magnetyczna przyjmująca ogromne wartości (setki, tysiące)" },
-                    { symbol: "\text{Budowa}", desc: "Posiadają budowę domenową (obszary spontanicznego namagnesowania). Powstaje w nich bardzo silny wypadkowy moment magnetyczny." },
-                    { symbol: "\text{Histereza}", desc: "Krzywa magnesowania ma kształt pętli histerezy magnetycznej." },
-                    { symbol: "\text{T. Curie}", desc: "Powyżej charakterystycznej temperatury Curie tracą swoje własności ferromagnetyczne i stają się paramagnetykami." }
+                    { symbol: "&epsilon;<sub>o</sub>", desc: "przenikalność elektryczna próżni" },
+                    { symbol: "&rho; (rho)", desc: "objętościowa gęstość ładunku" }
                 ]
             },
             {
                 id: "21",
                 topic: "Pole Magnetyczne",
                 question: "Siła Lorentza",
-                formula: "$$\vec{F}_L = q(\vec{v} \times \vec{B})$$",
+                formula: 'F<sub>L</sub> = q (v &times; B)',
                 variables: [
-                    { symbol: "\vec{F}_L", desc: "wektor siły Lorentza działającej na poruszający się ładunek w polu magnetycznym" },
-                    { symbol: "q", desc: "wartość ładunku elektrycznego cząstki" },
-                    { symbol: "\vec{v}", desc: "wektor prędkości cząstki" },
-                    { symbol: "\vec{B}", desc: "wektor indukcji pola magnetycznego" },
-                    { symbol: "\times", desc: "oznaczenie iloczynu wektorowego (siła jest prostopadła jednocześnie do prędkości i indukcji)" }
-                ]
-            },
-            {
-                id: "22",
-                topic: "Pole Magnetyczne",
-                question: "Prawo Biota-Savarta",
-                formula: "$$d\vec{B} = \frac{\mu_o\mu_r}{4\pi}\frac{I(d\vec{L} \times \vec{r})}{r^3}$$",
-                variables: [
-                    { symbol: "d\vec{B}", desc: "elementarny wektor indukcji pola magnetycznego wytworzony przez element przewodnika" },
-                    { symbol: "\mu_o", desc: "przenikalność magnetyczna próżni" },
-                    { symbol: "\mu_r", desc: "względna przenikalność magnetyczna ośrodka" },
-                    { symbol: "I", desc: "natężenie prądu płynącego przez przewodnik" },
-                    { symbol: "d\vec{L}", desc: "wektorowy element długości przewodnika, zgodny z kierunkiem prądu" },
-                    { symbol: "\vec{r}", desc: "wektor wodzący łączący element przewodnika dL z punktem, w którym badamy pole" },
-                    { symbol: "r", desc: "odległość (długość wektora r)" }
-                ]
-            },
-            {
-                id: "23",
-                topic: "Równania Maxwella",
-                question: "Całkowanie Równania Maxwella (Wersje Całkowe z Równaniami Materiałowymi)",
-                formula: "$$\oint_S \vec{D} \cdot d\vec{S} = \int \rho dV \quad \text{(Pr. Gaussa dla E)}$$$$\oint_S \vec{B} \cdot d\vec{S} = 0 \quad \text{(Pr. Gaussa dla B)}$$$$\oint_C \vec{H} \cdot d\vec{l} = \int_S \left( \vec{j} + \frac{\partial \vec{D}}{\partial t} \right) \cdot d\vec{S} \quad \text{(Ampera)}$$$$\oint_C \vec{E} \cdot d\vec{l} = -\int_S \frac{\partial \vec{B}}{\partial t} \cdot d\vec{S} \quad \text{(Faradaya)}$$$$\text{Równania materiałowe: } \vec{D} = \varepsilon_o\varepsilon_r\vec{E}, \quad \vec{B} = \mu_o\mu_r\vec{H}$$",
-                variables: [
-                    { symbol: "\vec{E}, \vec{D}", desc: "wektor natężenia pola elektrycznego / wektor indukcji elektrostatycznej (przesunięcia)" },
-                    { symbol: "\vec{B}, \vec{H}", desc: "wektor indukcji magnetycznej / wektor natężenia pola magnetycznego" },
-                    { symbol: "\rho, V", desc: "gęstość ładunku / objętość (całka po objętości daje ładunek całkowity)" },
-                    { symbol: "d\vec{S}, d\vec{l}", desc: "elementarny wektor powierzchni zorientowanej / elementarny wektor konturu (drogi)" },
-                    { symbol: "\vec{j}", desc: "gęstość prądu przewodzenia" },
-                    { symbol: "\frac{\partial \vec{D}}{\partial t}", desc: "gęstość prądu przesunięcia Maxwella (pochodna cząstkowa po czasie)" },
-                    { symbol: "\varepsilon_o, \varepsilon_r", desc: "przenikalność elektryczna próżni / względna ośrodka" },
-                    { symbol: "\mu_o, \mu_r", desc: "przenikalność magnetyczna próżni / względna ośrodka" }
+                    { symbol: "F<sub>L</sub>", desc: "siła działająca na ładunek w polu magnetycznym" },
+                    { symbol: "q", desc: "wartość ładunku elektrycznego" },
+                    { symbol: "v", desc: "prędkość cząstki" },
+                    { symbol: "B", desc: "indukcja magnetyczna" }
                 ]
             },
             {
                 id: "24",
                 topic: "Równania Maxwella",
                 question: "Równania Maxwella w postaci różniczkowej",
-                formula: "$$\nabla \cdot \vec{D} = \rho \quad \implies \text{div } \vec{D} = \rho$$$$\nabla \cdot \vec{B} = 0 \quad \implies \text{div } \vec{B} = 0$$$$\nabla \times \vec{H} = \vec{j} + \frac{\partial \vec{D}}{\partial t} \implies \text{rot } \vec{H} = \vec{j} + \frac{\partial \vec{D}}{\partial t}$$$$\nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t} \implies \text{rot } \vec{E} = -\frac{\partial \vec{B}}{\partial t}$$",
+                formula: 'div D = &rho;<br>div B = 0<br>rot H = j + <div class="fraction"><span class="numerator">&part;D</span><span class="denominator">&part;t</span></div><br>rot E = - <div class="fraction"><span class="numerator">&part;B</span><span class="denominator">&part;t</span></div>',
                 variables: [
-                    { symbol: "\nabla \cdot (\text{div})", desc: "operator dywergencji - określa źródłowość pola w danym punkcie przestrzeni" },
-                    { symbol: "\nabla \times (\text{rot})", desc: "operator rotacji (wir) - określa wirowość pola wokół punktu przestrzeni" },
-                    { symbol: "\vec{D}, \vec{B}, \vec{H}, \vec{E}", desc: "pola wektorowe (odpowiednio: indukcja elektr., indukcja magn., natężenie magn., natężenie elektr.)" },
-                    { symbol: "\rho", desc: "gęstość objętościowa ładunku swobodnego" },
-                    { symbol: "\vec{j}", desc: "wektor gęstości prądu elektrycznego" },
-                    { symbol: "\frac{\partial}{\partial t}", desc: "pochodna cząstkowa po czasie wskazująca na dynamikę pól i fal elektromagnetycznych" }
+                    { symbol: "div / rot", desc: "operator dywergencji (źródłowości) / rotacji (wirowości) pola" },
+                    { symbol: "D / E", desc: "indukcja elektryczna / natężenie pola elektrycznego" },
+                    { symbol: "B / H", desc: "indukcja magnetyczna / natężenie pola magnetycznego" },
+                    { symbol: "&rho; (rho)", desc: "gęstość ładunku elektrycznego" },
+                    { symbol: "j", desc: "gęstość prądu przewodzenia" }
                 ]
             }
         ];
@@ -645,67 +195,39 @@
 
         function updateCard() {
             const card = flashcardsData[currentIndex];
-            
-            // Reset obrotu przed zmianą treści
             document.getElementById('card').classList.remove('flipped');
             
             setTimeout(() => {
-                // Przód
                 document.getElementById('cardId').innerText = "#" + card.id;
                 document.getElementById('cardTopic').innerText = card.topic;
                 document.getElementById('cardQuestion').innerText = card.question;
-
-                // Tył
                 document.getElementById('cardIdBack').innerText = "#" + card.id;
                 document.getElementById('cardFormula').innerHTML = card.formula;
 
-                // Zmienne
                 const varContainer = document.getElementById('cardVariables');
                 varContainer.innerHTML = '';
                 card.variables.forEach(v => {
                     const item = document.createElement('div');
                     item.className = 'variable-item';
-                    item.innerHTML = `<span class="variable-symbol">\(${v.symbol}\)</span> &mdash; ${v.desc}`;
+                    item.innerHTML = `<span class="variable-symbol">${v.symbol}</span> &mdash; ${v.desc}`;
                     varContainer.appendChild(item);
                 });
 
-                // Aktualizacja licznika postępu
                 document.getElementById('progressTracker').innerText = `Fiszka: ${currentIndex + 1} / ${flashcardsData.length}`;
-
-                // Ponowne wyrenderowanie MathJax dla nowych wzorów
-                if (window.MathJax) {
-                    MathJax.typesetPromise();
-                }
-            }, 150);
+            }, 100);
         }
 
-        function flipCard() {
-            document.getElementById('card').classList.toggle('flipped');
-        }
-
-        function nextCard() {
-            currentIndex = (currentIndex + 1) % flashcardsData.length;
-            updateCard();
-        }
-
-        function prevCard() {
-            currentIndex = (currentIndex - 1 + flashcardsData.length) % flashcardsData.length;
-            updateCard();
-        }
-
+        function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
+        function nextCard() { currentIndex = (currentIndex + 1) % flashcardsData.length; updateCard(); }
+        function prevCard() { currentIndex = (currentIndex - 1 + flashcardsData.length) % flashcardsData.length; updateCard(); }
         function shuffleCards() {
             for (let i = flashcardsData.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [flashcardsData[i], flashcardsData[j]] = [flashcardsData[j], flashcardsData[i]];
             }
-            currentIndex = 0;
-            updateCard();
+            currentIndex = 0; updateCard();
         }
-
-        // Inicjalizacja pierwszej karty przy załadowaniu strony
-        window.onload = () => {
-            updateCard();
-        };
+        window.onload = () => { updateCard(); };
     </script>
 </body>
 </html>
