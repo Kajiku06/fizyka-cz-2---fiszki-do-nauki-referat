@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiszki Fizyka - Pełna Baza 28 Kart</title>
+    <title>Fiszki Fizyka - Wersja z Wektorami</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -35,7 +35,7 @@
         }
         button:hover { background-color: var(--accent-color); color: var(--bg-color); }
         .progress { margin-bottom: 15px; font-size: 1.05rem; color: #94a3b8; font-weight: bold; }
-        .flashcard-container { width: 100%; max-width: 680px; height: 480px; perspective: 1000px; cursor: pointer; }
+        .flashcard-container { width: 100%; max-width: 680px; height: 520px; perspective: 1000px; cursor: pointer; }
         .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
         .flashcard.flipped { transform: rotateY(180deg); }
         .card-face {
@@ -58,15 +58,20 @@
         .fraction { display: inline-block; vertical-align: middle; text-align: center; padding: 0 4px; font-size: 0.95em; }
         .fraction span.numerator { display: block; border-bottom: 2px solid var(--text-color); padding-bottom: 1px; }
         .fraction span.denominator { display: block; padding-top: 1px; }
-        .vector { display: inline-block; position: relative; }
-        .vector::after { content: "→"; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; }
+        
+        /* SPECJALNA KLASA DLA PŁASKIEJ KRESKI WEKTOROWEJ NAD LITERĄ */
+        .vector {
+            display: inline-block;
+            text-decoration: overline;
+            text-decoration-thickness: 2px;
+        }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Fiszki: Fizyka 1 cz. 2</h1>
-        <div class="subtitle">Pełna baza danych — Dokładnie 28 interaktywnych kart naukowej powtórki</div>
+        <div class="subtitle">Baza 28 fiszek — Pełny zapis wektorowy z płaskimi kreskami nad symbolami</div>
     </header>
 
     <div class="progress" id="progressTracker">Ładowanie zestawu...</div>
@@ -102,7 +107,7 @@
             {
                 id: "1",
                 topic: "Równanie drgań",
-                question: "Równanie różniczkowe drgań wymuszonych",
+                question: "Równanie drgań wymuszonych",
                 formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = P cos(&Omega;t)',
                 variables: [
                     { symbol: "x", desc: "wychylenie układu z położenia równowagi" },
@@ -116,12 +121,12 @@
             {
                 id: "2",
                 topic: "Równanie drgań",
-                question: "Częstość rezonansowa w drganiach wymuszonych",
+                question: "Częstość rezonansowa dla drgań wymuszonych",
                 formula: '&omega;<sub>r</sub> = &radic;(&omega;<sub>o</sub><sup>2</sup> - 2&beta;<sup>2</sup>)',
                 variables: [
-                    { symbol: "&omega;<sub>r</sub>", desc: "częstość rezonansowa układu (częstość siły wymuszającej, przy której amplituda osiąga maksimum)" },
+                    { symbol: "&omega;<sub>r</sub>", desc: "częstość rezonansowa układu (amplituda osiąga maksimum)" },
                     { symbol: "&omega;<sub>o</sub>", desc: "częstość kołowa drgań własnych" },
-                    { symbol: "&beta;", desc: "współczynnik tłumienia" }
+                    { symbol: "&beta;", desc: "współczynnik tłumienia ośrodka" }
                 ]
             },
             {
@@ -130,8 +135,8 @@
                 question: "Równanie różniczkowe drgań tłumionych",
                 formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = 0',
                 variables: [
-                    { symbol: "d<sup>2</sup>x / dt<sup>2</sup>", desc: "druga pochodna położenia po czasie (przyspieszenie)" },
-                    { symbol: "dx / dt", desc: "pierwsza pochodna położenia po czasie (prędkość)" },
+                    { symbol: "d<sup>2</sup>x / dt<sup>2</sup>", desc: "druga pochodna położenia (przyspieszenie układu)" },
+                    { symbol: "dx / dt", desc: "pierwsza pochodna położenia (prędkość układu)" },
                     { symbol: "&beta;", desc: "współczynnik tłumienia" },
                     { symbol: "&omega;<sub>o</sub>", desc: "częstość kołowa drgań własnych" }
                 ]
@@ -139,287 +144,284 @@
             {
                 id: "4",
                 topic: "Równanie drgań",
-                question: "Rozwiązanie równania drgań tłumionych oraz ich częstość kołowa",
-                formula: 'x = x<sub>o</sub> e<sup>-&beta;t</sup> cos(&omega;t + &phi;)<br><br>&omega; = &radic;(&omega;<sub>o</sub><sup>2</sup> - &beta;<sup>2</sup>)',
+                question: "Rozwiązanie równania drgań tłumionych",
+                formula: 'x = x<sub>o</sub> e<sup>-&beta;t</sup> cos(&omega;t + &phi;)',
                 variables: [
                     { symbol: "x<sub>o</sub>", desc: "amplituda początkowa drgań" },
                     { symbol: "e", desc: "podstawa logarytmu naturalnego" },
-                    { symbol: "&beta;", desc: "współczynnik tłumienia" },
-                    { symbol: "&omega;", desc: "częstość kołowa drgań tłumionych" },
-                    { symbol: "&phi; (phi)", desc: "faza początkowa ruchu" }
+                    { symbol: "&beta;", desc: "współczynnik tłumienia w wykładniku" },
+                    { symbol: "&phi; (phi)", desc: "faza początkowa drgań tłumionych" }
                 ]
             },
             {
                 id: "5",
                 topic: "Równanie drgań",
-                question: "Równanie drgań harmonicznych (dla osłabienia tłumienia &beta; = 0)",
-                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + &omega;<sub>o</sub><sup>2</sup>x = 0',
+                question: "Częstość kołowa drgań tłumionych",
+                formula: '&omega; = &radic;(&omega;<sub>o</sub><sup>2</sup> - &beta;<sup>2</sup>)',
                 variables: [
-                    { symbol: "&beta; = 0", desc: "założenie o braku jakichkolwiek oporów ruchu i tłumienia w układzie" },
-                    { symbol: "&omega;<sub>o</sub><sup>2</sup>x", desc: "człon związany z siłą sprężystą powracającą układ do równowagi" }
+                    { symbol: "&omega;", desc: "częstość kołowa drgań tłumionych" },
+                    { symbol: "&omega;<sub>o</sub>", desc: "częstość kołowa drgań własnych niehamowanych" },
+                    { symbol: "&beta;", desc: "współczynnik tłumienia" }
                 ]
             },
             {
                 id: "6",
                 topic: "Równanie drgań",
-                question: "Rozwiązanie równania drgań harmonicznych",
-                formula: 'x = x<sub>o</sub> cos(&omega;<sub>o</sub>t + &phi;)',
+                question: "Równanie drgań harmonicznych (dla osłabienia tłumienia &beta; = 0)",
+                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + &omega;<sub>o</sub><sup>2</sup>x = 0',
                 variables: [
-                    { symbol: "x", desc: "wychylenie w chwili czasu t" },
-                    { symbol: "x<sub>o</sub>", desc: "maksymalna amplituda drgań harmonicznych" },
-                    { symbol: "&omega;<sub>o</sub>", desc: "częstość własna układu drgającego" },
-                    { symbol: "&phi;", desc: "faza początkowa" }
+                    { symbol: "&beta; = 0", desc: "założenie o idealnym braku tłumienia i oporów ruchu" },
+                    { symbol: "&omega;<sub>o</sub>", desc: "częstość własna ruchu harmonicznego" }
                 ]
             },
             {
                 id: "7",
+                topic: "Równanie drgań",
+                question: "Rozwiązanie równania drgań harmonicznych",
+                formula: 'x = x<sub>o</sub> cos(&omega;<sub>o</sub>t + &phi;)',
+                variables: [
+                    { symbol: "x", desc: "wychylenie czasowe układu" },
+                    { symbol: "x<sub>o</sub>", desc: "maksymalna amplituda drgań" },
+                    { symbol: "&omega;<sub>o</sub>t + &phi;", desc: "faza całkowita ruchu harmonicznego" }
+                ]
+            },
+            {
+                id: "8",
                 topic: "Wahadła",
                 question: "Okres drgań wahadła fizycznego",
                 formula: 'T = 2&pi; &radic;<div class="fraction"><span class="numerator">J</span><span class="denominator">mgl</span></div>',
                 variables: [
                     { symbol: "T", desc: "okres drgań wahadła fizycznego" },
-                    { symbol: "J", desc: "moment bezwładności ciała względem osi obrotu" },
-                    { symbol: "m", desc: "masa całkowita wahadła" },
+                    { symbol: "J", desc: "moment bezwładności względem osi obrotu" },
+                    { symbol: "m", desc: "masa całkowita bryły" },
                     { symbol: "g", desc: "przyspieszenie ziemskie" },
-                    { symbol: "l", desc: "odległość od osi obrotu do środka ciężkości ciała" }
+                    { symbol: "l", desc: "odległość od osi obrotu do środka ciężkości" }
                 ]
             },
             {
-                id: "8",
+                id: "9",
                 topic: "Drgania tłumione",
                 question: "Logarytmiczny dekrement tłumienia",
                 formula: '&Lambda; = ln <div class="fraction"><span class="numerator">A<sub>o</sub>e<sup>-&beta;t</sup></span><span class="denominator">A<sub>o</sub>e<sup>-&beta;(t+T)</sup></span></div> = &beta;T',
                 variables: [
                     { symbol: "&Lambda; (lambda)", desc: "logarytmiczny dekrement tłumienia" },
-                    { symbol: "ln", desc: "logarytm naturalny z ilorazu amplitud po upływie jednego okresu T" },
+                    { symbol: "ln", desc: "logarytm naturalny" },
                     { symbol: "&beta;", desc: "współczynnik tłumienia" },
                     { symbol: "T", desc: "okres drgań" }
                 ]
             },
             {
-                id: "9",
-                topic: "Elektrostatyka",
-                question: "Prawo Coulomba (Siła oddziaływania)",
-                formula: 'F = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r<sup>2</sup></span></div>',
-                variables: [
-                    { symbol: "F", desc: "siła wzajemnego oddziaływania elektrostatycznego ładunków" },
-                    { symbol: "k", desc: "stała elektrostatyczna" },
-                    { symbol: "q<sub>1</sub>, q<sub>2</sub>", desc: "wartości punktowych ładunków elektrycznych" },
-                    { symbol: "r", desc: "odległość pomiędzy ładunkami" }
-                ]
-            },
-            {
                 id: "10",
                 topic: "Elektrostatyka",
-                question: "Natężenie pola elektrycznego ładunku punktowego",
-                formula: 'E = k <div class="fraction"><span class="numerator">Q</span><span class="denominator">r<sup>2</sup></span></div>',
+                question: "Siła Coulomba (Postać wektorowa)",
+                formula: '<span class="vector">F</span> = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r<sup>2</sup></span></div> <span class="vector">r<sub>o</sub></span>',
                 variables: [
-                    { symbol: "E", desc: "natężenie pola elektrycznego w punkcie oddalonym o r od źródła" },
-                    { symbol: "Q", desc: "ładunek punktowy będący źródłem pola" },
-                    { symbol: "r", desc: "odległość od ładunku Q" }
+                    { symbol: "<span class=\"vector\">F</span>", desc: "wektor siły wzajemnego oddziaływania elektrostatycznego ładunków" },
+                    { symbol: "k", desc: "stała elektrostatyczna ośrodka" },
+                    { symbol: "q<sub>1</sub>, q<sub>2</sub>", desc: "wartości ładunków punktowych" },
+                    { symbol: "<span class=\"vector\">r<sub>o</sub></span>", desc: "wektor jednostkowy (wersor) kierunku promienia r" }
                 ]
             },
             {
                 id: "11",
                 topic: "Elektrostatyka",
-                question: "Potencjał pola elektrycznego ładunku punktowego",
-                formula: 'V = k <div class="fraction"><span class="numerator">Q</span><span class="denominator">r</span></div>',
+                question: "Natężenie pola elektrycznego (Postać wektorowa)",
+                formula: '<span class="vector">E</span> = k <div class="fraction"><span class="numerator">Q</span><span class="denominator">r<sup>2</sup></span></div> <span class="vector">r<sub>o</sub></span>',
                 variables: [
-                    { symbol: "V", desc: "potencjał pola elektrycznego (skalar)" },
-                    { symbol: "k", desc: "stała elektrostatyczna" },
-                    { symbol: "Q", desc: "ładunek źródłowy" },
-                    { symbol: "r", desc: "odległość od ładunku" }
+                    { symbol: "<span class=\"vector\">E</span>", desc: "wektor natężenia pola elektrycznego" },
+                    { symbol: "Q", desc: "ładunek źródłowy pola" },
+                    { symbol: "r", desc: "odległość, a <span class=\"vector\">r<sub>o</sub></span> to wersor kierunku" }
                 ]
             },
             {
                 id: "12",
                 topic: "Elektrostatyka",
-                question: "Zależność natężenia pola od potencjału",
-                formula: '<span class="vector">E</span> = - grad(V)',
+                question: "Potencjał pola elektrycznego ładunku punktowego",
+                formula: 'V = k <div class="fraction"><span class="numerator">Q</span><span class="denominator">r</span></div>',
                 variables: [
-                    { symbol: "<span class=\"vector\">E</span>", desc: "wektor natężenia pola elektrycznego" },
-                    { symbol: "grad(V)", desc: "gradient potencjału elektrycznego" },
-                    { symbol: "Minus (-)", desc: "oznacza, że zwrot wektora pola skierowany jest od potencjału wyższego do niższego" }
+                    { symbol: "V", desc: "potencjał pola elektrycznego (wielkość skalarna — brak kreski)" },
+                    { symbol: "k", desc: "stała elektrostatyczna" },
+                    { symbol: "Q", desc: "ładunek źródłowy" },
+                    { symbol: "r", desc: "odległość od źródła" }
                 ]
             },
             {
                 id: "13",
                 topic: "Elektrostatyka",
-                question: "Energia potencjalna układu dwóch ładunków",
-                formula: 'E<sub>p</sub> = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r</span></div>',
+                question: "Zależność natężenia pola od potencjału",
+                formula: '<span class="vector">E</span> = - grad(V)',
                 variables: [
-                    { symbol: "E<sub>p</sub>", desc: "energia potencjalna układu dwóch ładunków q<sub>1</sub> i q<sub>2</sub>" },
-                    { symbol: "r", desc: "wzajemna odległość między ładunkami" }
+                    { symbol: "<span class=\"vector\">E</span>", desc: "wektor natężenia pola elektrycznego (z płaską kreską)" },
+                    { symbol: "grad(V)", desc: "gradient potencjału skalarnego" },
+                    { symbol: "Minus (-)", desc: "oznacza zwrot pola w stronę malejącego potencjału" }
                 ]
             },
             {
                 id: "14",
                 topic: "Elektrostatyka",
-                question: "Równanie Poissona",
-                formula: '&Delta;V = - <div class="fraction"><span class="numerator">1</span><span class="denominator">&epsilon;<sub>o</sub></span></div> &rho;',
+                question: "Energia potencjalna układu dwóch ładunków",
+                formula: 'E<sub>p</sub> = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r</span></div>',
                 variables: [
-                    { symbol: "&Delta; (laplasjan)", desc: "operator różniczkowy Laplace'a" },
-                    { symbol: "V", desc: "potencjał elektryczny" },
-                    { symbol: "&epsilon;<sub>o</sub>", desc: "przenikalność elektryczna próżni" },
-                    { symbol: "&rho; (rho)", desc: "objętościowa gęstość ładunku elektrycznego" }
+                    { symbol: "E<sub>p</sub>", desc: "energia potencjalna elektrostatyczna (wielkość skalarna — bez kreski)" },
+                    { symbol: "q<sub>1</sub>, q<sub>2</sub>", desc: "wartości ładunków" },
+                    { symbol: "r", desc: "wzajemna odległość" }
                 ]
             },
             {
                 id: "15",
-                topic: "Kondensatory",
-                question: "Ogólna definicja pojemności kondensatora oraz model płaski",
-                formula: 'C = <div class="fraction"><span class="numerator">Q</span><span class="denominator">U</span></div>, \quad C = <div class="fraction"><span class="numerator">&epsilon;<sub>o</sub>&epsilon;<sub>r</sub>S</span><span class="denominator">d</span></div>',
+                topic: "Elektrostatyka",
+                question: "Równanie Poissona",
+                formula: '&Delta;V = - <div class="fraction"><span class="numerator">1</span><span class="denominator">&epsilon;<sub>o</sub></span></div> &rho;',
                 variables: [
-                    { symbol: "C", desc: "pojemność kondensatora" },
-                    { symbol: "Q", desc: "zgromadzony ładunek elektryczny" },
-                    { symbol: "U", desc: "napięcie między okładkami" },
-                    { symbol: "S", desc: "powierzchnia okładek kondensatora płaskiego" },
-                    { symbol: "d", desc: "odległość okładek od siebie" },
-                    { symbol: "&epsilon;<sub>r</sub>", desc: "względna przenikalność elektryczna dielektryka" }
+                    { symbol: "&Delta; (laplasjan)", desc: "operator różniczkowy" },
+                    { symbol: "V", desc: "potencjał elektryczny (skalar)" },
+                    { symbol: "&epsilon;<sub>o</sub>", desc: "przenikalność elektryczna próżni" },
+                    { symbol: "&rho; (rho)", desc: "objętościowa gęstość ładunku" }
                 ]
             },
             {
                 id: "16",
-                topic: "Pola energii",
-                question: "Gęstość energii pola elektrycznego i magnetycznego",
-                formula: 'u = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &epsilon;<sub>o</sub>E<sup>2</sup><br><br>u<sub>B</sub> = <div class="fraction"><span class="numerator">1</span><span class="denominator">2&mu;<sub>r</sub>&mu;<sub>o</sub></span></div> B<sup>2</sup>',
+                topic: "Kondensatory",
+                question: "Definicja pojemności oraz model kondensatora płaskiego",
+                formula: 'C = <div class="fraction"><span class="numerator">Q</span><span class="denominator">U</span></div> \quad oraz \quad C = <div class="fraction"><span class="numerator">&epsilon;<sub>o</sub>&epsilon;<sub>r</sub>S</span><span class="denominator">d</span></div>',
                 variables: [
-                    { symbol: "u", desc: "gęstość energii pola elektrycznego" },
-                    { symbol: "E", desc: "natężenie pola elektrycznego" },
-                    { symbol: "u<sub>B</sub>", desc: "gęstość energii pola magnetycznego" },
-                    { symbol: "B", desc: "indukcja magnetyczna" },
-                    { symbol: "&mu;<sub>o</sub>, &mu;<sub>r</sub>", desc: "przenikalność magnetyczna próżni oraz względna ośrodka" }
+                    { symbol: "C", desc: "pojemność elektryczna (skalar)" },
+                    { symbol: "Q , U", desc: "ładunek oraz napięcie" },
+                    { symbol: "S , d", desc: "powierzchnia okładek oraz odległość między nimi" },
+                    { symbol: "&epsilon;<sub>r</sub>", desc: "względna przenikalność dielektryka" }
                 ]
             },
             {
                 id: "17",
-                topic: "Dielektryki",
-                question: "Elektryczny moment dipolowy",
-                formula: '<span class="vector">p</span> = q <span class="vector">l</span>',
+                topic: "Gęstość energii",
+                question: "Gęstość energii pola elektrycznego",
+                formula: 'u = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &epsilon;<sub>o</sub> E<sup>2</sup>',
                 variables: [
-                    { symbol: "<span class=\"vector\">p</span>", desc: "wektor momentu dipolowego" },
-                    { symbol: "q", desc: "wartość bezwzględna ładunku dipola" },
-                    { symbol: "<span class=\"vector\">l</span>", desc: "wektor przesunięcia od ładunku ujemnego do dodatniego" }
+                    { symbol: "u", desc: "gęstość energii (skalar)" },
+                    { symbol: "E", desc: "wartość natężenia pola elektrycznego" },
+                    { symbol: "&epsilon;<sub>o</sub>", desc: "przenikalność elektryczna próżni" }
                 ]
             },
             {
                 id: "18",
-                topic: "Dielektryki",
-                question: "Wektor polaryzacji i podatność elektryczna",
-                formula: '<span class="vector">P</span> = n<span class="vector">p</span> = n&alpha;<span class="vector">E</span> = &chi;&epsilon;<sub>o</sub><span class="vector">E</span><br><br>&chi; = n&alpha; / &epsilon;<sub>o</sub>',
+                topic: "Gęstość energii",
+                question: "Gęstość energii pola magnetycznego",
+                formula: 'u<sub>B</sub> = <div class="fraction"><span class="numerator">1</span><span class="denominator">2&mu;<sub>r</sub>&mu;<sub>o</sub></span></div> B<sup>2</sup>',
                 variables: [
-                    { symbol: "<span class=\"vector\">P</span>", desc: "wektor polaryzacji (suma momentów dipolowych w jednostce objętości)" },
-                    { symbol: "n", desc: "koncentracja dipoli" },
-                    { symbol: "&alpha; (alpha)", desc: "współczynnik polaryzacji" },
-                    { symbol: "&chi; (chi)", desc: "podatność elektryczna dielektryka" }
+                    { symbol: "u<sub>B</sub>", desc: "gęstość energii pola magnetycznego" },
+                    { symbol: "B", desc: "wartość indukcji magnetycznej" },
+                    { symbol: "&mu;<sub>o</sub>, &mu;<sub>r</sub>", desc: "przenikalność magnetyczna próżni i względna" }
                 ]
             },
             {
                 id: "19",
-                topic: "Prąd Elektryczny",
-                question: "Natężenie prądu oraz gęstość prądu",
-                formula: 'I = <div class="fraction"><span class="numerator">dQ</span><span class="denominator">dt</span></div>, \quad j = I / S',
+                topic: "Dielektryki",
+                question: "Elektryczny moment dipolowy (Postać wektorowa)",
+                formula: '<span class="vector">p</span> = q <span class="vector">l</span>',
                 variables: [
-                    { symbol: "I", desc: "natężenie prądu elektrycznego" },
-                    { symbol: "dQ / dt", desc: "pochodna ładunku po czasie" },
-                    { symbol: "j", desc: "gęstość prądu" },
-                    { symbol: "S", desc: "pole przekroju poprzecznego przewodnika" }
+                    { symbol: "<span class=\"vector\">p</span>", desc: "wektor elektrycznego momentu dipolowego (z kreską)" },
+                    { symbol: "q", desc: "ładunek elektryczny dipola" },
+                    { symbol: "<span class=\"vector\">l</span>", desc: "wektor przesunięcia od ładunku ujemnego do dodatniego (z kreską)" }
                 ]
             },
             {
                 id: "20",
-                topic: "Prawo Ohma",
-                question: "Prawo Ohma w postaci makroskopowej i mikroskopowej",
-                formula: 'R = <div class="fraction"><span class="numerator">U</span><span class="denominator">I</span></div>, \quad <span class="vector">j</span> = &sigma;<span class="vector">E</span>',
+                topic: "Dielektryki",
+                question: "Wektor polaryzacji i podatność elektryczna",
+                formula: '<span class="vector">P</span> = n<span class="vector">p</span> = n&alpha;<span class="vector">E</span> = &chi;&epsilon;<sub>o</sub><span class="vector">E</span>',
                 variables: [
-                    { symbol: "R", desc: "opór elektryczny przewodnika" },
-                    { symbol: "&sigma; (sigma)", desc: "przewodnictwo właściwe materiału (konduktywność)" },
-                    { symbol: "<span class=\"vector\">E</span>", desc: "natężenie pola elektrycznego" },
-                    { symbol: "<span class=\"vector\">j</span>", desc: "gęstość prądu" }
+                    { symbol: "<span class=\"vector\">P</span>", desc: "wektor polaryzacji dielektryka (z kreską)" },
+                    { symbol: "<span class=\"vector\">E</span>", desc: "wektor natężenia pola elektrycznego (z kreską)" },
+                    { symbol: "&chi; (chi)", desc: "podatność elektryczna dielektryka (&chi; = n&alpha; / &epsilon;<sub>o</sub>)" }
                 ]
             },
             {
                 id: "21",
                 topic: "Prąd Elektryczny",
+                question: "Natężenie prądu oraz wektor gęstości prądu",
+                formula: 'I = <div class="fraction"><span class="numerator">dQ</span><span class="denominator">dt</span></div> \quad oraz \quad <span class="vector">j</span> = <div class="fraction"><span class="numerator">I</span><span class="denominator">S</span></div> <span class="vector">n</span>',
+                variables: [
+                    { symbol: "I", desc: "natężenie prądu (skalar — brak kreski)" },
+                    { symbol: "<span class=\"vector\">j</span>", desc: "wektor gęstości prądu (z kreską)" },
+                    { symbol: "<span class=\"vector\">n</span>", desc: "wersor normalny prostopadły do powierzchni przekroju S" }
+                ]
+            },
+            {
+                id: "22",
+                topic: "Prawo Ohma",
+                question: "Prawo Ohma (postać makroskopowa i mikroskopowa wektorowa)",
+                formula: 'R = <div class="fraction"><span class="numerator">U</span><span class="denominator">I</span></div> \quad oraz \quad <span class="vector">j</span> = &sigma;<span class="vector">E</span>',
+                variables: [
+                    { symbol: "R", desc: "opór elektryczny (skalar)" },
+                    { symbol: "<span class=\"vector\">j</span>", desc: "wektor gęstości prądu (z kreską)" },
+                    { symbol: "<span class=\"vector\">E</span>", desc: "wektor natężenia pola elektrycznego (z kreską)" },
+                    { symbol: "&sigma; (sigma)", desc: "przewodnictwo właściwe materiału (konduktywność)" }
+                ]
+            },
+            {
+                id: "23",
+                topic: "Prąd Elektryczny",
                 question: "Rezystancja geometryczna przewodnika",
                 formula: 'R = &rho; <div class="fraction"><span class="numerator">l</span><span class="denominator">S</span></div>',
                 variables: [
-                    { symbol: "&rho; (rho)", desc: "rezystywność (opór właściwy) materiału" },
+                    { symbol: "&rho; (rho)", desc: "rezystywność (opór właściwy materiału)" },
                     { symbol: "l", desc: "długość przewodnika" },
                     { symbol: "S", desc: "pole przekroju poprzecznego" }
                 ]
             },
             {
-                id: "22",
-                topic: "Prawa Kirchhoffa",
-                question: "Dwa prawa Kirchhoffa dla obwodów",
-                formula: 'I Prawo: &Sigma; I = 0 (dla węzła)<br><br>II Prawo: &Sigma; U = 0 (dla oczka)',
-                variables: [
-                    { symbol: "&Sigma; I = 0", desc: "Suma prądów w węźle wynosi zero (Zasada zachowania ładunku)" },
-                    { symbol: "&Sigma; U = 0", desc: "Suma spadków napięć i SEM w oczku wynosi zero (Zasada zachowania energii)" }
-                ]
-            },
-            {
-                id: "23",
-                topic: "Moc i Ciepło",
-                question: "Ciepło Joule'a oraz moc prądu elektrycznego",
-                formula: 'Q = dW = Udq = UIdt<br><br>P = <div class="fraction"><span class="numerator">dW</span><span class="denominator">dt</span></div> = UI',
-                variables: [
-                    { symbol: "Q / dW", desc: "ciepło wydzielone na oporze / praca elementarna prądu" },
-                    { symbol: "P", desc: "moc elektryczna strumienia prądu" },
-                    { symbol: "U, I, dt", desc: "napięcie, natężenie oraz różniczkowy przyrost czasu" }
-                ]
-            },
-            {
                 id: "24",
-                topic: "Magnetyki",
-                question: "Podział ciał magnetycznych: DIAMAGNETYKI i PARAMAGNETYKI",
-                formula: 'Diamagnetyki: &mu;<sub>r</sub> &lt; 1, &chi;<sub>M</sub> &lt; 0 (np. woda &mu;<sub>r</sub>=0.999991)<br><br>Paramagnetyki: &mu;<sub>r</sub> &gt; 1, &chi;<sub>M</sub> &gt; 0 (np. glin &mu;<sub>r</sub>=1.000008)',
+                topic: "Prawa Kirchhoffa",
+                question: "Dwa prawa Kirchhoffa",
+                formula: 'I: &Sigma; I = 0 (węzeł) <br> II: &Sigma; U = 0 (oczko)',
                 variables: [
-                    { symbol: "Diamagnetyki", desc: "Momenty indukowane są przeciwnie do pola. Są wypychane z silniejszego pola." },
-                    { symbol: "Paramagnetyki", desc: "Uporządkowane momenty własne p<sub>m</sub> są zgodne z zewnętrznym polem. Są wciągane do pola." }
+                    { symbol: "I Prawo", desc: "Suma natężeń prądów w węźle obwodu wynosi zero" },
+                    { symbol: "II Prawo", desc: "Suma napięć i sił elektromotorycznych w zamkniętym oczku wynosi zero" }
                 ]
             },
             {
                 id: "25",
-                topic: "Magnetyki",
-                question: "Podział ciał magnetycznych: FERROMAGNETYKI",
-                formula: '&mu;<sub>r</sub> &gt;&gt; 1 (np. stal &mu;<sub>r</sub> = 300)',
+                topic: "Moc i Ciepło",
+                question: "Ciepło Joule'a oraz moc prądu",
+                formula: 'Q = dW = Udq = UIdt \quad oraz \quad P = <div class="fraction"><span class="numerator">dW</span><span class="denominator">dt</span></div> = UI',
                 variables: [
-                    { symbol: "Budowa domenowa", desc: "Kryształy z budową domenową wytwarzające silny wypadkowy moment magnetyczny." },
-                    { symbol: "Histereza", desc: "Krzywa magnesowania posiada kształt pętli histerezy." },
-                    { symbol: "Temperatura Curie", desc: "Temperatura graniczna, powyżej której ferromagnetyki stają się paramagnetykami." }
+                    { symbol: "Q / dW", desc: "ilość wydzielonego ciepła / praca elementarna prądu" },
+                    { symbol: "P", desc: "moc prądu elektrycznego" }
                 ]
             },
             {
                 id: "26",
-                topic: "Pole Magnetyczne",
-                question: "Siła Lorentza i Prawo Biota-Savarta",
-                formula: '<span class="vector">F</span><sub>L</sub> = q (<span class="vector">v</span> &times; <span class="vector">B</span>)<br><br>d<span class="vector">B</span> = <div class="fraction"><span class="numerator">&mu;<sub>o</sub>&mu;<sub>r</sub></span><span class="denominator">4&pi;</span></div> <div class="fraction"><span class="numerator">I (d<span class="vector">L</span> &times; <span class="vector">r</span>)</span><span class="denominator">r<sup>3</sup></span></div>',
+                topic: "Magnetyki",
+                question: "Właściwości magnetyków: Diamagnetyki, Paramagnetyki i Ferromagnetyki",
+                formula: 'Dia: &mu;<sub>r</sub>&lt;1, &chi;<sub>M</sub>&lt;0 \quad Para: &mu;<sub>r</sub>&gt;1, &chi;<sub>M</sub>&gt;0 \quad Ferro: &mu;<sub>r</sub>&gt;&gt;1',
                 variables: [
-                    { symbol: "<span class=\"vector\">F</span><sub>L</sub>", desc: "wektor siły Lorentza działającej na ładunek q poruszający się z prędkością v" },
-                    { symbol: "d<span class=\"vector\">B</span>", desc: "elementarny wektor indukcji magnetycznej od odcinka dL przewodnika z prądem I" },
-                    { symbol: "&times;", desc: "iloczyn wektorowy" }
+                    { symbol: "Diamagnetyki", desc: "Momenty indukowane przeciwnie do pola. Są wypychane z pola (np. woda)." },
+                    { symbol: "Paramagnetyki", desc: "Momenty własne porządkują się zgodnie z polem. Są wciągane do pola (np. glin)." },
+                    { symbol: "Ferromagnetyki", desc: "Budowa domenowa, wykazują pętlę histerezy, powyżej temp. Curie tracą właściwości ferromagnetyczne." }
                 ]
             },
             {
                 id: "27",
-                topic: "Równania Maxwella",
-                question: "Równania Maxwella w postaci całkowej oraz równania materiałowe",
-                formula: '&oint;<sub>S</sub> <span class="vector">D</span>&middot;d<span class="vector">S</span> = &int; &rho;dV \quad &oint;<sub>S</sub> <span class="vector">B</span>&middot;d<span class="vector">S</span> = 0<br>&oint;<sub>C</sub> <span class="vector">H</span>&middot;d<span class="vector">l</span> = &int;<sub>S</sub> (<span class="vector">j</span> + <div class="fraction"><span class="numerator">&part;<span class="vector">D</span></span><span class="denominator">&part;t</span></div>)&middot;d<span class="vector">S</span><br>&oint;<sub>C</sub> <span class="vector">E</span>&middot;d<span class="vector">l</span> = - &int;<sub>S</sub> <div class="fraction"><span class="numerator">&part;<span class="vector">B</span></span><span class="denominator">&part;t</span></div>&middot;d<span class="vector">S</span><br>Materiałowe: <span class="vector">D</span> = &epsilon;<sub>o</sub>&epsilon;<sub>r</sub><span class="vector">E</span> ,  <span class="vector">B</span> = &mu;<sub>o</sub>&mu;<sub>r</sub><span class="vector">H</span>',
+                topic: "Pole Magnetyczne",
+                question: "Siła Lorentza i Prawo Biota-Savarta (Zapis wektorowy)",
+                formula: '<span class="vector">F</span><sub>L</sub> = q (<span class="vector">v</span> &times; <span class="vector">B</span>) <br><br> d<span class="vector">B</span> = <div class="fraction"><span class="numerator">&mu;<sub>o</sub>&mu;<sub>r</sub></span><span class="denominator">4&pi;</span></div> <div class="fraction"><span class="numerator">I (d<span class="vector">L</span> &times; <span class="vector">r</span>)</span><span class="denominator">r<sup>3</sup></span></div>',
                 variables: [
-                    { symbol: "I i II", desc: "Prawo Gaussa dla pola elektrycznego (źródłowe) oraz magnetycznego (bezźródłowe)" },
-                    { symbol: "III i IV", desc: "Uogólnione prawo Ampera (prąd przesunięcia) oraz Prawo indukcji Faradaya" }
+                    { symbol: "<span class=\"vector\">F</span><sub>L</sub>", desc: "wektor siły Lorentza (z kreską)" },
+                    { symbol: "<span class=\"vector\">v</span> , <span class=\"vector\">B</span>", desc: "wektor prędkości cząstki oraz wektor indukcji magnetycznej (z kreskami)" },
+                    { symbol: "d<span class=\"vector\">B</span> , d<span class=\"vector\">L</span> , <span class=\"vector\">r</span>", desc: "elementarne wektory indukcji, odcinka przewodu oraz wektora wodzącego r (wszystkie z kreskami)" },
+                    { symbol: "&times;", desc: "symbol iloczynu wektorowego" }
                 ]
             },
             {
                 id: "28",
                 topic: "Równania Maxwella",
-                question: "Równania Maxwella w postaci różniczkowej",
-                formula: 'div D = &rho;<br>div B = 0<br>rot H = j + <div class="fraction"><span class="numerator">&part;D</span><span class="denominator">&part;t</span></div><br>rot E = - <div class="fraction"><span class="numerator">&part;B</span><span class="denominator">&part;t</span></div>',
+                question: "Równania Maxwella (Postać różniczkowa, całkowa i materiałowa)",
+                formula: 'div <span class="vector">D</span> = &rho;, \quad div <span class="vector">B</span> = 0, \quad rot <span class="vector">H</span> = <span class="vector">j</span> + <div class="fraction"><span class="numerator">&part;<span class="vector">D</span></span><span class="denominator">&part;t</span></div>, \quad rot <span class="vector">E</span> = - <div class="fraction"><span class="numerator">&part;<span class="vector">B</span></span><span class="denominator">&part;t</span></div> <br><br> Całkowe: &oint;<span class="vector">D</span>&middot;d<span class="vector">S</span>=&int;&rho;dV, \quad &oint;<span class="vector">B</span>&middot;d<span class="vector">S</span>=0 <br> Materiałowe: <span class="vector">D</span> = &epsilon;<sub>o</sub>&epsilon;<sub>r</sub><span class="vector">E</span>, \quad <span class="vector">B</span> = &mu;<sub>o</sub>&mu;<sub>r</sub><span class="vector">H</span>',
                 variables: [
-                    { symbol: "div D / div B", desc: "dywergencja (źródłowość) indukcji elektrycznej (równa gęstości ładunku &rho;) oraz magnetycznej (zawsze zero)" },
-                    { symbol: "rot H / rot E", desc: "rotacja (wirowość) pól zależna od gęstości prądu j oraz zmian strumieni w czasie (&part;/&part;t)" }
+                    { symbol: "<span class=\"vector\">D</span> , <span class=\"vector\">E</span>", desc: "wektor indukcji elektrycznej oraz wektor natężenia pola elektrycznego (z kreskami)" },
+                    { symbol: "<span class=\"vector\">B</span> , <span class=\"vector\">H</span>", desc: "wektor indukcji magnetycznej oraz wektor natężenia pola magnetycznego (z kreskami)" },
+                    { symbol: "<span class=\"vector\">j</span>", desc: "wektor gęstości prądu przewodzenia (z kreską)" },
+                    { symbol: "Zależności", desc: "Wzory opisują pełne fundamenty elektrodynamiki klasycznej zgodnie ze zrzutami ekranu." }
                 ]
             }
         ];
