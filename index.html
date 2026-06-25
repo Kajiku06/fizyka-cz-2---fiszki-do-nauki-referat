@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiszki Fizyka - Bezpieczna Wersja</title>
+    <title>Fiszki Fizyka - Pełna Baza 28 Kart</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -14,9 +14,8 @@
             --border-color: #334155;
             --variable-color: #f472b6;
         }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -26,213 +25,51 @@
             align-items: center;
             min-height: 100vh;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        h1 {
-            color: var(--accent-color);
-            margin-bottom: 5px;
-            font-size: 2.2rem;
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            font-size: 1rem;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
+        header { text-align: center; margin-bottom: 20px; }
+        h1 { color: var(--accent-color); margin: 0 0 5px 0; font-size: 2rem; }
+        .subtitle { color: #94a3b8; font-size: 0.95rem; }
+        .controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         button {
-            background-color: #334155;
-            color: white;
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-            font-weight: 500;
+            background-color: #334155; color: white; border: 1px solid var(--border-color);
+            padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; font-weight: 500;
         }
-
-        button:hover {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-weight: bold;
-        }
-
-        .progress {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            color: #94a3b8;
-            font-weight: 500;
-        }
-
-        .flashcard-container {
-            width: 100%;
-            max-width: 700px;
-            height: 540px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .flashcard {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.4s ease;
-        }
-
-        .flashcard.flipped {
-            transform: rotateY(180deg);
-        }
-
+        button:hover { background-color: var(--accent-color); color: var(--bg-color); }
+        .progress { margin-bottom: 15px; font-size: 1.05rem; color: #94a3b8; font-weight: bold; }
+        .flashcard-container { width: 100%; max-width: 680px; height: 480px; perspective: 1000px; cursor: pointer; }
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
+        .flashcard.flipped { transform: rotateY(180deg); }
         .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 16px;
-            padding: 30px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
-            overflow-y: auto;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 16px; padding: 25px; box-sizing: border-box; display: flex;
+            flex-direction: column; border: 2px solid var(--border-color); overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
-
-        .card-front {
-            background-color: var(--card-bg-front);
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .card-back {
-            background-color: var(--card-bg-back);
-            transform: rotateY(180deg);
-            justify-content: flex-start;
-        }
-
-        .id-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: #334155;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            font-weight: 600;
-        }
-
-        .topic-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: rgba(56, 189, 248, 0.15);
-            color: var(--accent-color);
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .question-text {
-            font-size: 1.6rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin: 0 10px;
-        }
-
-        .formula-display {
-            font-size: 1.8rem;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 18px;
-            border-radius: 12px;
-            margin: 10px 0 20px 0;
-            border-left: 5px solid var(--accent-color);
-            text-align: center;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-            line-height: 2;
-        }
-
-        .variables-list {
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .variables-list h4 {
-            margin: 0 0 12px 0;
-            color: var(--accent-color);
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .variable-item {
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #e2e8f0;
-        }
-
-        .variable-symbol {
-            color: var(--variable-color);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .hint-click {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-        }
-
-        .fraction {
-            display: inline-block;
-            vertical-align: middle;
-            text-align: center;
-            padding: 0 4px;
-        }
-        .fraction > span {
-            display: block;
-            padding-top: 2px;
-        }
-        .fraction span.numerator {
-            border-bottom: 2px solid var(--text-color);
-            padding-bottom: 2px;
-        }
-        .fraction span.denominator {
-            padding-top: 2px;
-        }
+        .card-front { background-color: var(--card-bg-front); justify-content: center; align-items: center; text-align: center; }
+        .card-back { background-color: var(--card-bg-back); transform: rotateY(180deg); justify-content: flex-start; }
+        .id-badge { position: absolute; top: 15px; left: 15px; background-color: #334155; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .topic-badge { position: absolute; top: 15px; right: 15px; background-color: rgba(56, 189, 248, 0.12); color: var(--accent-color); padding: 3px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        .question-text { font-size: 1.45rem; font-weight: bold; line-height: 1.4; padding: 0 10px; }
+        .formula-display { font-size: 1.55rem; background: rgba(15, 23, 42, 0.55); padding: 14px; border-radius: 12px; margin: 15px 0; border-left: 5px solid var(--accent-color); text-align: center; line-height: 1.8; }
+        .variables-list { border-top: 1px solid var(--border-color); padding-top: 12px; }
+        .variables-list h4 { margin: 0 0 8px 0; color: var(--accent-color); font-size: 1rem; text-transform: uppercase; }
+        .variable-item { margin-bottom: 6px; font-size: 0.92rem; line-height: 1.4; }
+        .variable-symbol { color: var(--variable-color); font-weight: bold; }
+        .hint-click { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+        .fraction { display: inline-block; vertical-align: middle; text-align: center; padding: 0 4px; font-size: 0.95em; }
+        .fraction span.numerator { display: block; border-bottom: 2px solid var(--text-color); padding-bottom: 1px; }
+        .fraction span.denominator { display: block; padding-top: 1px; }
+        .vector { display: inline-block; position: relative; }
+        .vector::after { content: "→"; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Fiszki z Fizyki</h1>
-        <div class="subtitle">Wzory, Definicje, Zmienne i Równania Materiałowe</div>
+        <h1>Fiszki: Fizyka 1 cz. 2</h1>
+        <div class="subtitle">Pełna baza danych — Dokładnie 28 interaktywnych kart naukowej powtórki</div>
     </header>
 
-    <div class="progress" id="progressTracker">Ładowanie...</div>
+    <div class="progress" id="progressTracker">Ładowanie zestawu...</div>
 
     <div class="flashcard-container" onclick="flipCard()">
         <div class="flashcard" id="card">
@@ -240,16 +77,16 @@
                 <span class="id-badge" id="cardId">#1</span>
                 <span class="topic-badge" id="cardTopic">Temat</span>
                 <div class="question-text" id="cardQuestion">Pytanie</div>
-                <div class="hint-click">Kliknij, aby odkryć odpowiedź</div>
+                <div class="hint-click">Kliknij kartę, aby zobaczyć odpowiedź</div>
             </div>
             <div class="card-face card-back" onclick="event.stopPropagation();">
                 <span class="id-badge" id="cardIdBack">#1</span>
-                <div class="formula-display" id="cardFormula"></div>
+                <div class="formula-display" id="cardFormula">Wzór</div>
                 <div class="variables-list">
-                    <h4>Objaśnienie zmiennych i stałych:</h4>
-                    <div id="cardVariables"></div>
+                    <h4>Informacje z materiałów:</h4>
+                    <div id="cardVariables">Zmienne</div>
                 </div>
-                <div class="hint-click" style="color: #64748b;" onclick="flipCard()">Kliknij tło karty, aby obrócić</div>
+                <div class="hint-click" style="color: #64748b;" onclick="flipCard()">Kliknij szare tło, aby obrócić z powrotem</div>
             </div>
         </div>
     </div>
@@ -263,74 +100,160 @@
     <script>
         const flashcardsData = [
             {
-                id: "1a",
+                id: "1",
                 topic: "Równanie drgań",
-                question: "Równanie drgań wymuszonych oraz częstość rezonansowa",
-                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = P cos(&Omega;t)<br><br>&omega;<sub>r</sub> = &radic;(&omega;<sub>o</sub><sup>2</sup> - 2&beta;<sup>2</sup>)',
+                question: "Równanie różniczkowe drgań wymuszonych",
+                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = P cos(&Omega;t)',
                 variables: [
-                    { symbol: "x", desc: "wychylenie układu z położenia równowagi w funkcji czasu t" },
+                    { symbol: "x", desc: "wychylenie układu z położenia równowagi" },
                     { symbol: "t", desc: "czas" },
-                    { symbol: "d<sup>2</sup>x / dt<sup>2</sup>", desc: "druga pochodna wychylenia po czasie (przyspieszenie układu)" },
-                    { symbol: "dx / dt", desc: "pierwsza pochodna ruchu po czasie (prędkość układu)" },
-                    { symbol: "&beta; (beta)", desc: "współczynnik tłumienia ośrodka" },
+                    { symbol: "&beta; (beta)", desc: "współczynnik tłumienia" },
                     { symbol: "&omega;<sub>o</sub>", desc: "częstość kołowa drgań własnych" },
                     { symbol: "P", desc: "amplituda siły wymuszającej" },
-                    { symbol: "&Omega; (omega wielka)", desc: "częstość kołowa siły wymuszającej zewnętrzne drgania" },
-                    { symbol: "&omega;<sub>r</sub>", desc: "częstość rezonansowa układu" }
-                ]
-            },
-            {
-                id: "1b",
-                topic: "Równanie drgań",
-                question: "Równanie drgań tłumionych i jego rozwiązanie",
-                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = 0<br><br>x = x<sub>o</sub>e<sup>-&beta;t</sup>cos(&omega;t + &phi;), gdzie &omega; = &radic;(&omega;<sub>o</sub><sup>2</sup> - &beta;<sup>2</sup>)',
-                variables: [
-                    { symbol: "x", desc: "chwilowe wychylenie z położenia równowagi" },
-                    { symbol: "x<sub>o</sub>", desc: "amplituda początkowa drgań" },
-                    { symbol: "e", desc: "podstawa logarytmu naturalnego" },
-                    { symbol: "&beta;", desc: "współczynnik tłumienia" },
-                    { symbol: "&omega;", desc: "częstość drgań tłumionych" },
-                    { symbol: "&phi; (phi)", desc: "faza początkowa drgań" }
+                    { symbol: "&Omega; (omega)", desc: "częstość kołowa zewnętrznej siły wymuszającej" }
                 ]
             },
             {
                 id: "2",
-                topic: "Wahadła",
-                question: "Okres drgań wahadła fizycznego",
-                formula: 'T = 2&pi; &radic;<div class="fraction"><span class="numerator">J</span><span class="denominator">mgl</span></div>',
+                topic: "Równanie drgań",
+                question: "Częstość rezonansowa w drganiach wymuszonych",
+                formula: '&omega;<sub>r</sub> = &radic;(&omega;<sub>o</sub><sup>2</sup> - 2&beta;<sup>2</sup>)',
                 variables: [
-                    { symbol: "T", desc: "okres drgań wahadła" },
-                    { symbol: "J", desc: "moment bezwładności bryły względem osi obrotu" },
-                    { symbol: "m", desc: "masa całkowita bryły" },
-                    { symbol: "g", desc: "przyspieszenie ziemskie" },
-                    { symbol: "l", desc: "odległość od osi obrotu do środka masy bryły" }
+                    { symbol: "&omega;<sub>r</sub>", desc: "częstość rezonansowa układu (częstość siły wymuszającej, przy której amplituda osiąga maksimum)" },
+                    { symbol: "&omega;<sub>o</sub>", desc: "częstość kołowa drgań własnych" },
+                    { symbol: "&beta;", desc: "współczynnik tłumienia" }
+                ]
+            },
+            {
+                id: "3",
+                topic: "Równanie drgań",
+                question: "Równanie różniczkowe drgań tłumionych",
+                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + 2&beta;<div class="fraction"><span class="numerator">dx</span><span class="denominator">dt</span></div> + &omega;<sub>o</sub><sup>2</sup>x = 0',
+                variables: [
+                    { symbol: "d<sup>2</sup>x / dt<sup>2</sup>", desc: "druga pochodna położenia po czasie (przyspieszenie)" },
+                    { symbol: "dx / dt", desc: "pierwsza pochodna położenia po czasie (prędkość)" },
+                    { symbol: "&beta;", desc: "współczynnik tłumienia" },
+                    { symbol: "&omega;<sub>o</sub>", desc: "częstość kołowa drgań własnych" }
                 ]
             },
             {
                 id: "4",
-                topic: "Elektrostatyka",
-                question: "Siła Coulomba (Oddziaływanie ładunków)",
-                formula: 'F = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r<sup>2</sup></span></div>',
+                topic: "Równanie drgań",
+                question: "Rozwiązanie równania drgań tłumionych oraz ich częstość kołowa",
+                formula: 'x = x<sub>o</sub> e<sup>-&beta;t</sup> cos(&omega;t + &phi;)<br><br>&omega; = &radic;(&omega;<sub>o</sub><sup>2</sup> - &beta;<sup>2</sup>)',
                 variables: [
-                    { symbol: "F", desc: "wartość siły wzajemnego oddziaływania ładunków" },
-                    { symbol: "k", desc: "stała elektrostatyczna ośrodka" },
-                    { symbol: "q<sub>1</sub>, q<sub>2</sub>", desc: "wartości ładunków punktowych" },
-                    { symbol: "r", desc: "odległość pomiędzy ładunkami" }
+                    { symbol: "x<sub>o</sub>", desc: "amplituda początkowa drgań" },
+                    { symbol: "e", desc: "podstawa logarytmu naturalnego" },
+                    { symbol: "&beta;", desc: "współczynnik tłumienia" },
+                    { symbol: "&omega;", desc: "częstość kołowa drgań tłumionych" },
+                    { symbol: "&phi; (phi)", desc: "faza początkowa ruchu" }
                 ]
             },
             {
                 id: "5",
-                topic: "Elektrostatyka",
-                question: "Natężenie pola elektrycznego ładunku punktowego",
-                formula: 'E = k <div class="fraction"><span class="numerator">Q</span><span class="denominator">r<sup>2</sup></span></div>',
+                topic: "Równanie drgań",
+                question: "Równanie drgań harmonicznych (dla osłabienia tłumienia &beta; = 0)",
+                formula: '<div class="fraction"><span class="numerator">d<sup>2</sup>x</span><span class="denominator">dt<sup>2</sup></span></div> + &omega;<sub>o</sub><sup>2</sup>x = 0',
                 variables: [
-                    { symbol: "E", desc: "natężenie pola elektrycznego" },
-                    { symbol: "Q", desc: "ładunek będący źródłem pola" },
-                    { symbol: "r", desc: "odległość od ładunku źródłowego" }
+                    { symbol: "&beta; = 0", desc: "założenie o braku jakichkolwiek oporów ruchu i tłumienia w układzie" },
+                    { symbol: "&omega;<sub>o</sub><sup>2</sup>x", desc: "człon związany z siłą sprężystą powracającą układ do równowagi" }
+                ]
+            },
+            {
+                id: "6",
+                topic: "Równanie drgań",
+                question: "Rozwiązanie równania drgań harmonicznych",
+                formula: 'x = x<sub>o</sub> cos(&omega;<sub>o</sub>t + &phi;)',
+                variables: [
+                    { symbol: "x", desc: "wychylenie w chwili czasu t" },
+                    { symbol: "x<sub>o</sub>", desc: "maksymalna amplituda drgań harmonicznych" },
+                    { symbol: "&omega;<sub>o</sub>", desc: "częstość własna układu drgającego" },
+                    { symbol: "&phi;", desc: "faza początkowa" }
+                ]
+            },
+            {
+                id: "7",
+                topic: "Wahadła",
+                question: "Okres drgań wahadła fizycznego",
+                formula: 'T = 2&pi; &radic;<div class="fraction"><span class="numerator">J</span><span class="denominator">mgl</span></div>',
+                variables: [
+                    { symbol: "T", desc: "okres drgań wahadła fizycznego" },
+                    { symbol: "J", desc: "moment bezwładności ciała względem osi obrotu" },
+                    { symbol: "m", desc: "masa całkowita wahadła" },
+                    { symbol: "g", desc: "przyspieszenie ziemskie" },
+                    { symbol: "l", desc: "odległość od osi obrotu do środka ciężkości ciała" }
+                ]
+            },
+            {
+                id: "8",
+                topic: "Drgania tłumione",
+                question: "Logarytmiczny dekrement tłumienia",
+                formula: '&Lambda; = ln <div class="fraction"><span class="numerator">A<sub>o</sub>e<sup>-&beta;t</sup></span><span class="denominator">A<sub>o</sub>e<sup>-&beta;(t+T)</sup></span></div> = &beta;T',
+                variables: [
+                    { symbol: "&Lambda; (lambda)", desc: "logarytmiczny dekrement tłumienia" },
+                    { symbol: "ln", desc: "logarytm naturalny z ilorazu amplitud po upływie jednego okresu T" },
+                    { symbol: "&beta;", desc: "współczynnik tłumienia" },
+                    { symbol: "T", desc: "okres drgań" }
                 ]
             },
             {
                 id: "9",
+                topic: "Elektrostatyka",
+                question: "Prawo Coulomba (Siła oddziaływania)",
+                formula: 'F = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r<sup>2</sup></span></div>',
+                variables: [
+                    { symbol: "F", desc: "siła wzajemnego oddziaływania elektrostatycznego ładunków" },
+                    { symbol: "k", desc: "stała elektrostatyczna" },
+                    { symbol: "q<sub>1</sub>, q<sub>2</sub>", desc: "wartości punktowych ładunków elektrycznych" },
+                    { symbol: "r", desc: "odległość pomiędzy ładunkami" }
+                ]
+            },
+            {
+                id: "10",
+                topic: "Elektrostatyka",
+                question: "Natężenie pola elektrycznego ładunku punktowego",
+                formula: 'E = k <div class="fraction"><span class="numerator">Q</span><span class="denominator">r<sup>2</sup></span></div>',
+                variables: [
+                    { symbol: "E", desc: "natężenie pola elektrycznego w punkcie oddalonym o r od źródła" },
+                    { symbol: "Q", desc: "ładunek punktowy będący źródłem pola" },
+                    { symbol: "r", desc: "odległość od ładunku Q" }
+                ]
+            },
+            {
+                id: "11",
+                topic: "Elektrostatyka",
+                question: "Potencjał pola elektrycznego ładunku punktowego",
+                formula: 'V = k <div class="fraction"><span class="numerator">Q</span><span class="denominator">r</span></div>',
+                variables: [
+                    { symbol: "V", desc: "potencjał pola elektrycznego (skalar)" },
+                    { symbol: "k", desc: "stała elektrostatyczna" },
+                    { symbol: "Q", desc: "ładunek źródłowy" },
+                    { symbol: "r", desc: "odległość od ładunku" }
+                ]
+            },
+            {
+                id: "12",
+                topic: "Elektrostatyka",
+                question: "Zależność natężenia pola od potencjału",
+                formula: '<span class="vector">E</span> = - grad(V)',
+                variables: [
+                    { symbol: "<span class=\"vector\">E</span>", desc: "wektor natężenia pola elektrycznego" },
+                    { symbol: "grad(V)", desc: "gradient potencjału elektrycznego" },
+                    { symbol: "Minus (-)", desc: "oznacza, że zwrot wektora pola skierowany jest od potencjału wyższego do niższego" }
+                ]
+            },
+            {
+                id: "13",
+                topic: "Elektrostatyka",
+                question: "Energia potencjalna układu dwóch ładunków",
+                formula: 'E<sub>p</sub> = k <div class="fraction"><span class="numerator">q<sub>1</sub>q<sub>2</sub></span><span class="denominator">r</span></div>',
+                variables: [
+                    { symbol: "E<sub>p</sub>", desc: "energia potencjalna układu dwóch ładunków q<sub>1</sub> i q<sub>2</sub>" },
+                    { symbol: "r", desc: "wzajemna odległość między ładunkami" }
+                ]
+            },
+            {
+                id: "14",
                 topic: "Elektrostatyka",
                 question: "Równanie Poissona",
                 formula: '&Delta;V = - <div class="fraction"><span class="numerator">1</span><span class="denominator">&epsilon;<sub>o</sub></span></div> &rho;',
@@ -338,34 +261,165 @@
                     { symbol: "&Delta; (laplasjan)", desc: "operator różniczkowy Laplace'a" },
                     { symbol: "V", desc: "potencjał elektryczny" },
                     { symbol: "&epsilon;<sub>o</sub>", desc: "przenikalność elektryczna próżni" },
-                    { symbol: "&rho; (rho)", desc: "objętościowa gęstość ładunku" }
+                    { symbol: "&rho; (rho)", desc: "objętościowa gęstość ładunku elektrycznego" }
+                ]
+            },
+            {
+                id: "15",
+                topic: "Kondensatory",
+                question: "Ogólna definicja pojemności kondensatora oraz model płaski",
+                formula: 'C = <div class="fraction"><span class="numerator">Q</span><span class="denominator">U</span></div>, \quad C = <div class="fraction"><span class="numerator">&epsilon;<sub>o</sub>&epsilon;<sub>r</sub>S</span><span class="denominator">d</span></div>',
+                variables: [
+                    { symbol: "C", desc: "pojemność kondensatora" },
+                    { symbol: "Q", desc: "zgromadzony ładunek elektryczny" },
+                    { symbol: "U", desc: "napięcie między okładkami" },
+                    { symbol: "S", desc: "powierzchnia okładek kondensatora płaskiego" },
+                    { symbol: "d", desc: "odległość okładek od siebie" },
+                    { symbol: "&epsilon;<sub>r</sub>", desc: "względna przenikalność elektryczna dielektryka" }
+                ]
+            },
+            {
+                id: "16",
+                topic: "Pola energii",
+                question: "Gęstość energii pola elektrycznego i magnetycznego",
+                formula: 'u = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &epsilon;<sub>o</sub>E<sup>2</sup><br><br>u<sub>B</sub> = <div class="fraction"><span class="numerator">1</span><span class="denominator">2&mu;<sub>r</sub>&mu;<sub>o</sub></span></div> B<sup>2</sup>',
+                variables: [
+                    { symbol: "u", desc: "gęstość energii pola elektrycznego" },
+                    { symbol: "E", desc: "natężenie pola elektrycznego" },
+                    { symbol: "u<sub>B</sub>", desc: "gęstość energii pola magnetycznego" },
+                    { symbol: "B", desc: "indukcja magnetyczna" },
+                    { symbol: "&mu;<sub>o</sub>, &mu;<sub>r</sub>", desc: "przenikalność magnetyczna próżni oraz względna ośrodka" }
+                ]
+            },
+            {
+                id: "17",
+                topic: "Dielektryki",
+                question: "Elektryczny moment dipolowy",
+                formula: '<span class="vector">p</span> = q <span class="vector">l</span>',
+                variables: [
+                    { symbol: "<span class=\"vector\">p</span>", desc: "wektor momentu dipolowego" },
+                    { symbol: "q", desc: "wartość bezwzględna ładunku dipola" },
+                    { symbol: "<span class=\"vector\">l</span>", desc: "wektor przesunięcia od ładunku ujemnego do dodatniego" }
+                ]
+            },
+            {
+                id: "18",
+                topic: "Dielektryki",
+                question: "Wektor polaryzacji i podatność elektryczna",
+                formula: '<span class="vector">P</span> = n<span class="vector">p</span> = n&alpha;<span class="vector">E</span> = &chi;&epsilon;<sub>o</sub><span class="vector">E</span><br><br>&chi; = n&alpha; / &epsilon;<sub>o</sub>',
+                variables: [
+                    { symbol: "<span class=\"vector\">P</span>", desc: "wektor polaryzacji (suma momentów dipolowych w jednostce objętości)" },
+                    { symbol: "n", desc: "koncentracja dipoli" },
+                    { symbol: "&alpha; (alpha)", desc: "współczynnik polaryzacji" },
+                    { symbol: "&chi; (chi)", desc: "podatność elektryczna dielektryka" }
+                ]
+            },
+            {
+                id: "19",
+                topic: "Prąd Elektryczny",
+                question: "Natężenie prądu oraz gęstość prądu",
+                formula: 'I = <div class="fraction"><span class="numerator">dQ</span><span class="denominator">dt</span></div>, \quad j = I / S',
+                variables: [
+                    { symbol: "I", desc: "natężenie prądu elektrycznego" },
+                    { symbol: "dQ / dt", desc: "pochodna ładunku po czasie" },
+                    { symbol: "j", desc: "gęstość prądu" },
+                    { symbol: "S", desc: "pole przekroju poprzecznego przewodnika" }
+                ]
+            },
+            {
+                id: "20",
+                topic: "Prawo Ohma",
+                question: "Prawo Ohma w postaci makroskopowej i mikroskopowej",
+                formula: 'R = <div class="fraction"><span class="numerator">U</span><span class="denominator">I</span></div>, \quad <span class="vector">j</span> = &sigma;<span class="vector">E</span>',
+                variables: [
+                    { symbol: "R", desc: "opór elektryczny przewodnika" },
+                    { symbol: "&sigma; (sigma)", desc: "przewodnictwo właściwe materiału (konduktywność)" },
+                    { symbol: "<span class=\"vector\">E</span>", desc: "natężenie pola elektrycznego" },
+                    { symbol: "<span class=\"vector\">j</span>", desc: "gęstość prądu" }
                 ]
             },
             {
                 id: "21",
-                topic: "Pole Magnetyczne",
-                question: "Siła Lorentza",
-                formula: 'F<sub>L</sub> = q (v &times; B)',
+                topic: "Prąd Elektryczny",
+                question: "Rezystancja geometryczna przewodnika",
+                formula: 'R = &rho; <div class="fraction"><span class="numerator">l</span><span class="denominator">S</span></div>',
                 variables: [
-                    { symbol: "F<sub>L</sub>", desc: "siła działająca na ładunek w polu magnetycznym" },
-                    { symbol: "q", desc: "wartość ładunku elektrycznego" },
-                    { symbol: "v", desc: "prędkość cząstki" },
-                    { symbol: "B", desc: "indukcja magnetyczna pola" },
-                    { symbol: "&times;", desc: "symbol iloczynu wektorowego" }
+                    { symbol: "&rho; (rho)", desc: "rezystywność (opór właściwy) materiału" },
+                    { symbol: "l", desc: "długość przewodnika" },
+                    { symbol: "S", desc: "pole przekroju poprzecznego" }
+                ]
+            },
+            {
+                id: "22",
+                topic: "Prawa Kirchhoffa",
+                question: "Dwa prawa Kirchhoffa dla obwodów",
+                formula: 'I Prawo: &Sigma; I = 0 (dla węzła)<br><br>II Prawo: &Sigma; U = 0 (dla oczka)',
+                variables: [
+                    { symbol: "&Sigma; I = 0", desc: "Suma prądów w węźle wynosi zero (Zasada zachowania ładunku)" },
+                    { symbol: "&Sigma; U = 0", desc: "Suma spadków napięć i SEM w oczku wynosi zero (Zasada zachowania energii)" }
+                ]
+            },
+            {
+                id: "23",
+                topic: "Moc i Ciepło",
+                question: "Ciepło Joule'a oraz moc prądu elektrycznego",
+                formula: 'Q = dW = Udq = UIdt<br><br>P = <div class="fraction"><span class="numerator">dW</span><span class="denominator">dt</span></div> = UI',
+                variables: [
+                    { symbol: "Q / dW", desc: "ciepło wydzielone na oporze / praca elementarna prądu" },
+                    { symbol: "P", desc: "moc elektryczna strumienia prądu" },
+                    { symbol: "U, I, dt", desc: "napięcie, natężenie oraz różniczkowy przyrost czasu" }
                 ]
             },
             {
                 id: "24",
+                topic: "Magnetyki",
+                question: "Podział ciał magnetycznych: DIAMAGNETYKI i PARAMAGNETYKI",
+                formula: 'Diamagnetyki: &mu;<sub>r</sub> &lt; 1, &chi;<sub>M</sub> &lt; 0 (np. woda &mu;<sub>r</sub>=0.999991)<br><br>Paramagnetyki: &mu;<sub>r</sub> &gt; 1, &chi;<sub>M</sub> &gt; 0 (np. glin &mu;<sub>r</sub>=1.000008)',
+                variables: [
+                    { symbol: "Diamagnetyki", desc: "Momenty indukowane są przeciwnie do pola. Są wypychane z silniejszego pola." },
+                    { symbol: "Paramagnetyki", desc: "Uporządkowane momenty własne p<sub>m</sub> są zgodne z zewnętrznym polem. Są wciągane do pola." }
+                ]
+            },
+            {
+                id: "25",
+                topic: "Magnetyki",
+                question: "Podział ciał magnetycznych: FERROMAGNETYKI",
+                formula: '&mu;<sub>r</sub> &gt;&gt; 1 (np. stal &mu;<sub>r</sub> = 300)',
+                variables: [
+                    { symbol: "Budowa domenowa", desc: "Kryształy z budową domenową wytwarzające silny wypadkowy moment magnetyczny." },
+                    { symbol: "Histereza", desc: "Krzywa magnesowania posiada kształt pętli histerezy." },
+                    { symbol: "Temperatura Curie", desc: "Temperatura graniczna, powyżej której ferromagnetyki stają się paramagnetykami." }
+                ]
+            },
+            {
+                id: "26",
+                topic: "Pole Magnetyczne",
+                question: "Siła Lorentza i Prawo Biota-Savarta",
+                formula: '<span class="vector">F</span><sub>L</sub> = q (<span class="vector">v</span> &times; <span class="vector">B</span>)<br><br>d<span class="vector">B</span> = <div class="fraction"><span class="numerator">&mu;<sub>o</sub>&mu;<sub>r</sub></span><span class="denominator">4&pi;</span></div> <div class="fraction"><span class="numerator">I (d<span class="vector">L</span> &times; <span class="vector">r</span>)</span><span class="denominator">r<sup>3</sup></span></div>',
+                variables: [
+                    { symbol: "<span class=\"vector\">F</span><sub>L</sub>", desc: "wektor siły Lorentza działającej na ładunek q poruszający się z prędkością v" },
+                    { symbol: "d<span class=\"vector\">B</span>", desc: "elementarny wektor indukcji magnetycznej od odcinka dL przewodnika z prądem I" },
+                    { symbol: "&times;", desc: "iloczyn wektorowy" }
+                ]
+            },
+            {
+                id: "27",
+                topic: "Równania Maxwella",
+                question: "Równania Maxwella w postaci całkowej oraz równania materiałowe",
+                formula: '&oint;<sub>S</sub> <span class="vector">D</span>&middot;d<span class="vector">S</span> = &int; &rho;dV \quad &oint;<sub>S</sub> <span class="vector">B</span>&middot;d<span class="vector">S</span> = 0<br>&oint;<sub>C</sub> <span class="vector">H</span>&middot;d<span class="vector">l</span> = &int;<sub>S</sub> (<span class="vector">j</span> + <div class="fraction"><span class="numerator">&part;<span class="vector">D</span></span><span class="denominator">&part;t</span></div>)&middot;d<span class="vector">S</span><br>&oint;<sub>C</sub> <span class="vector">E</span>&middot;d<span class="vector">l</span> = - &int;<sub>S</sub> <div class="fraction"><span class="numerator">&part;<span class="vector">B</span></span><span class="denominator">&part;t</span></div>&middot;d<span class="vector">S</span><br>Materiałowe: <span class="vector">D</span> = &epsilon;<sub>o</sub>&epsilon;<sub>r</sub><span class="vector">E</span> ,  <span class="vector">B</span> = &mu;<sub>o</sub>&mu;<sub>r</sub><span class="vector">H</span>',
+                variables: [
+                    { symbol: "I i II", desc: "Prawo Gaussa dla pola elektrycznego (źródłowe) oraz magnetycznego (bezźródłowe)" },
+                    { symbol: "III i IV", desc: "Uogólnione prawo Ampera (prąd przesunięcia) oraz Prawo indukcji Faradaya" }
+                ]
+            },
+            {
+                id: "28",
                 topic: "Równania Maxwella",
                 question: "Równania Maxwella w postaci różniczkowej",
                 formula: 'div D = &rho;<br>div B = 0<br>rot H = j + <div class="fraction"><span class="numerator">&part;D</span><span class="denominator">&part;t</span></div><br>rot E = - <div class="fraction"><span class="numerator">&part;B</span><span class="denominator">&part;t</span></div>',
                 variables: [
-                    { symbol: "div", desc: "dywergencja (źródłowość pola)" },
-                    { symbol: "rot", desc: "rotacja (wirowość pola)" },
-                    { symbol: "D / E", desc: "indukcja elektryczna / natężenie pola elektrycznego" },
-                    { symbol: "B / H", desc: "indukcja magnetyczna / natężenie pola magnetycznego" },
-                    { symbol: "&rho;", desc: "gęstość ładunku" },
-                    { symbol: "j", desc: "gęstość prądu przewodzenia" }
+                    { symbol: "div D / div B", desc: "dywergencja (źródłowość) indukcji elektrycznej (równa gęstości ładunku &rho;) oraz magnetycznej (zawsze zero)" },
+                    { symbol: "rot H / rot E", desc: "rotacja (wirowość) pól zależna od gęstości prądu j oraz zmian strumieni w czasie (&part;/&part;t)" }
                 ]
             }
         ];
@@ -380,7 +434,6 @@
                 document.getElementById('cardId').innerText = "#" + card.id;
                 document.getElementById('cardTopic').innerText = card.topic;
                 document.getElementById('cardQuestion').innerText = card.question;
-
                 document.getElementById('cardIdBack').innerText = "#" + card.id;
                 document.getElementById('cardFormula').innerHTML = card.formula;
 
@@ -393,36 +446,21 @@
                     varContainer.appendChild(item);
                 });
 
-                document.getElementById('progressTracker').innerText = `Fiszka: ${currentIndex + 1} / ${flashcardsData.length}`;
+                document.getElementById('progressTracker').innerText = `Karta: ${currentIndex + 1} z ${flashcardsData.length}`;
             }, 100);
         }
 
-        function flipCard() {
-            document.getElementById('card').classList.toggle('flipped');
-        }
-
-        function nextCard() {
-            currentIndex = (currentIndex + 1) % flashcardsData.length;
-            updateCard();
-        }
-
-        function prevCard() {
-            currentIndex = (currentIndex - 1 + flashcardsData.length) % flashcardsData.length;
-            updateCard();
-        }
-
+        function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
+        function nextCard() { currentIndex = (currentIndex + 1) % flashcardsData.length; updateCard(); }
+        function prevCard() { currentIndex = (currentIndex - 1 + flashcardsData.length) % flashcardsData.length; updateCard(); }
         function shuffleCards() {
             for (let i = flashcardsData.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [flashcardsData[i], flashcardsData[j]] = [flashcardsData[j], flashcardsData[i]];
             }
-            currentIndex = 0;
-            updateCard();
+            currentIndex = 0; updateCard();
         }
-
-        window.onload = () => {
-            updateCard();
-        };
+        window.onload = () => { updateCard(); };
     </script>
 </body>
 </html>
